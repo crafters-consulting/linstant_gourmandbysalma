@@ -28,7 +28,6 @@ jobs:
         id: deploy_to_pages
         with:
           public_base_path: /
-          debug_mode: true
 
       
           
