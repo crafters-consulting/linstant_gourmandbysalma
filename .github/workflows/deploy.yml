@@ -27,6 +27,7 @@ jobs:
         uses: skywarth/vite-github-pages-deployer@master
         id: deploy_to_pages
         with:
+          public_base_path: /
           debug_mode: true
 
       
