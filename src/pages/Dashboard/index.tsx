@@ -1,3 +1,3 @@
 export const Dashboard = () => (
-    <div>Dashboard</div>
+    <div>Tssanay</div>
 )

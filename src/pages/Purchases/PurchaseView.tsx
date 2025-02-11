@@ -1,41 +1,28 @@
-import { useParams, Link } from 'react-router-dom';
-import { Edit, ArrowLeft } from 'lucide-react';
+import {useParams} from 'react-router-dom';
+import {usePurchaseByIdQuery} from "../../hooks";
+import {PageHeader} from "../../components";
 
 export function PurchaseView() {
-  const { id } = useParams();
+    const {id} = useParams<{ id: string }>();
+    const {data, isLoading} = usePurchaseByIdQuery(id!);
 
-  // Mock data - replace with actual data fetching
-  const purchase = {
-    id: Number(id),
-    date: '2024-03-15',
-    amount: 2500,
-    comment: 'Office supplies and equipment'
-  };
+    return (
+        <div>
+            <PageHeader title="Achat"
+                        backUrl="/purchases"
+                        editUrl={`/purchases/${id}/edit`}/>
 
-  return (
-    <div>
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
-        <Link to="/purchases" className="button button-primary">
-          <ArrowLeft size={20} />
-          Back to List
-        </Link>
-        <Link to={`/purchases/${id}/edit`} className="button button-primary">
-          <Edit size={20} />
-          Edit Purchase
-        </Link>
-      </div>
+            <div className="bg-white p-6 rounded-lg shadow-md grid gap-4">
 
-      <div className="sale-details">
-        <h1 className="page-title">Purchase Details</h1>
-        
-        <div style={{ display: 'grid', gap: '1rem' }}>
-          <p><strong>Date:</strong> {new Date(purchase.date).toLocaleDateString()}</p>
-          <p><strong>Amount:</strong> ${purchase.amount.toLocaleString()}</p>
-          <p><strong>Comment:</strong> {purchase.comment}</p>
+                {isLoading || !data ? "" : (<>
+                    <p><strong>Date:</strong> {new Date(data.date).toLocaleDateString('fr-FR')}</p>
+                    <p><strong>Amount:</strong> {data.amount.toLocaleString('fr-FR', {
+                        style: 'currency',
+                        currency: 'EUR'
+                    })}</p>
+                    <p><strong>Comment:</strong> {data.comment}</p>
+                </>)}
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
-
-export default PurchaseView;
