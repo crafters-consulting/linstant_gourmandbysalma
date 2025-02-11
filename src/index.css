@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+label {
+    @apply block font-medium mb-2
+}
+
+input, textarea {
+    @apply border border-gray-300 rounded-sm px-2 py-1 w-full text-base
+}
+
+h1 {
+    @apply text-2xl font-medium;
+}
+
+button {
+    @apply flex items-center gap-2 rounded-sm px-4 py-2
+}
+
+button.primary {
+    @apply bg-purple-800 text-white px-4 py-2
+}
+
+.card {
+    @apply bg-white p-6 rounded-lg shadow-md
+}

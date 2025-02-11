@@ -1,47 +1,33 @@
-import {useParams, Link} from 'react-router-dom';
-import {Edit, ArrowLeft} from 'lucide-react';
+import {useParams} from 'react-router-dom';
 import {PageHeader} from "../../components";
+import {useSaleByIdQuery} from "../../hooks";
 
 export function SaleView() {
-    const {id} = useParams();
+    const {id} = useParams<{ id: string }>();
+    const {data, isLoading} = useSaleByIdQuery(id!);
 
-    // Mock data - replace with actual data fetching
-    const sale = {
-        id: Number(id),
-        clientName: 'Acme Corp',
-        deliveryAddress: '123 Business Ave, Suite 100, New York, NY 10001',
-        deliveryDateTime: '2024-03-15T14:00',
-        amount: 5000,
-        deposit: 1500,
-        balanceDue: 3500,
-        status: 'Pending',
-        paymentMethod: 'Bank Transfer'
-    };
-
-    return (
+    return isLoading || !data ? "Chargement..." : (
         <div>
-            <PageHeader title={sale.clientName}
+            <PageHeader title={data.clientName}
                         backUrl="/sales"
                         editUrl={`/sales/${id}/edit`}/>
 
-            <div className="bg-white p-6 rounded-lg shadow-md grid gap-4">
-                <p><strong>Date de livraison:</strong> {new Date(sale.deliveryDateTime).toLocaleString('fr-FR')}</p>
-                <p><strong>Adresse de livraison:</strong> {sale.deliveryAddress}</p>
-                <p><strong>Montant:</strong> {sale.amount.toLocaleString('fr-FR', {
+            <div className="card grid gap-4">
+                <p><strong>Date de livraison:</strong> {new Date(data.deliveryDateTime).toLocaleString('fr-FR')}</p>
+                <p><strong>Adresse de livraison:</strong> {data.deliveryAddress}</p>
+                <p><strong>Montant:</strong> {data.amount.toLocaleString('fr-FR', {
                     style: 'currency',
                     currency: 'EUR'
                 })}</p>
-                <p><strong>Acompte:</strong> {sale.deposit.toLocaleString('fr-FR', {
+                <p><strong>Acompte:</strong> {data.deposit.toLocaleString('fr-FR', {
                     style: 'currency',
                     currency: 'EUR'
                 })}</p>
-                <p><strong>Restes à payer:</strong> {sale.balanceDue.toLocaleString('fr-FR', {
+                <p><strong>Restes à payer:</strong> {data.remaining.toLocaleString('fr-FR', {
                     style: 'currency',
                     currency: 'EUR'
                 })}</p>
             </div>
         </div>
-    );
+    )
 }
-
-export default SaleView

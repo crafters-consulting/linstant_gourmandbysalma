@@ -1,9 +1,10 @@
-import {useMemo} from 'react'
-import {useQuery} from '@tanstack/react-query'
-import {createClient, type SupabaseClient} from '@supabase/supabase-js'
+import {useEffect, useMemo, useState} from 'react'
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
+import {createClient, Session, type SupabaseClient} from '@supabase/supabase-js'
 import type {Database} from './database.types'
 
-type Purchase = Database['public']['Tables']['purchases']['Row'];
+export type Purchase = Database['public']['Tables']['purchases']['Row'];
+export type Sale = Database['public']['Tables']['sales']['Row'];
 
 type TypedSupabaseClient = SupabaseClient<Database>
 let client: TypedSupabaseClient
@@ -21,14 +22,43 @@ export function useSupabaseClient() {
     }, [])
 }
 
+export function useSupabaseSession() {
+    const supabaseClient = useSupabaseClient()
+    const [session, setSession] = useState<Session | null>(null)
+
+    useEffect(() => {
+        supabaseClient.auth.getSession().then((result) => {
+            setSession(result.data.session)
+        })
+
+        supabaseClient.auth.onAuthStateChange((_event, session) => {
+            setSession(session)
+        })
+    }, [supabaseClient])
+
+    return session;
+}
+
+export function useSignInMutation() {
+    const supabaseClient = useSupabaseClient()
+    const signInWithPassword = async (form: { email: string, password: string }) => {
+        const {data, error} = await supabaseClient.auth.signInWithPassword(form)
+        if (error) throw ""
+        return data;
+    };
+
+    return useMutation({mutationFn: signInWithPassword})
+}
+
 export function useSaleListQuery() {
     const supabase = useSupabaseClient();
 
     return useQuery({
         queryKey: ['sale', 'list'],
-        queryFn: () => supabase
-            .from('salse')
-            .select('*'),
+        queryFn: async () => supabase
+            .from('sales')
+            .select('*')
+            .then(it => it.data)
     })
 }
 
@@ -37,9 +67,10 @@ export function usePurchaseListQuery() {
 
     return useQuery({
         queryKey: ['purchase', 'list'],
-        queryFn: () => supabase
+        queryFn: async () => supabase
             .from('purchases')
-            .select('*'),
+            .select('*')
+            .then(it => it.data)
     })
 }
 
@@ -48,7 +79,7 @@ export function usePurchaseByIdQuery(id: string) {
 
     return useQuery({
         queryKey: ['purchase', 'byId', id],
-        queryFn: () => supabase
+        queryFn: async () => supabase
             .from('purchases')
             .select('*')
             .eq('id', id)
@@ -58,60 +89,69 @@ export function usePurchaseByIdQuery(id: string) {
     })
 }
 
-/*
+export function useSaleByIdQuery(id: string) {
+    const supabase = useSupabaseClient();
 
-  const { data: purchases = [], isLoading } = useQuery({
-    queryKey: ['purchases'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('purchases')
-        .select('*')
-        .order('created_at', { ascending: false });
+    return useQuery({
+        queryKey: ['purchase', 'byId', id],
+        queryFn: async () => supabase
+            .from('sales')
+            .select('*')
+            .eq('id', id)
+            .throwOnError()
+            .single<Sale>()
+            .then(it => it.data),
+    })
+}
 
-      if (error) throw error;
-      return data || [];
-    },
-    enabled: !!session,
-  });
+export function useSaveOrUpdatePurchaseMutation({onSuccess}: { onSuccess: () => void }) {
+    const queryClient = useQueryClient()
+    const supabase = useSupabaseClient();
 
-
-  const addPurchaseMutation = useMutation({
-    mutationFn: async (label: string) => {
-      const { error } = await supabase.from('purchases').insert([
-        {
-          label,
-          user_id: session.user.id,
+    return useMutation({
+        mutationFn: async ({id, ...data}: Omit<Purchase, 'id'> & { id?: string }) => {
+            if (id) {
+                const {error} = await supabase
+                    .from('purchases')
+                    .update(data)
+                    .eq('id', id);
+                if (error) throw error;
+            } else {
+                const {error} = await supabase
+                    .from('purchases')
+                    .insert([data])
+                if (error) throw error;
+            }
         },
-      ]);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['purchases'] });
-      setNewLabel('');
-    },
-  });
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ['purchases']});
+            onSuccess()
+        },
+    })
+}
 
-  const updatePurchaseMutation = useMutation({
-    mutationFn: async ({ id, label }: { id: string; label: string }) => {
-      const { error } = await supabase
-        .from('purchases')
-        .update({ label })
-        .eq('id', id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['purchases'] });
-      setEditingId(null);
-    },
-  });
+export function useSaveOrUpdateSaleMutation({onSuccess}: { onSuccess: () => void }) {
+    const queryClient = useQueryClient()
+    const supabase = useSupabaseClient();
 
-  const deletePurchaseMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('purchases').delete().eq('id', id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['purchases'] });
-    },
-  });
- */
+    return useMutation({
+        mutationFn: async ({id, ...data}: Omit<Sale, 'id'> & { id?: string }) => {
+            if (id) {
+                const {error} = await supabase
+                    .from('sales')
+                    .update(data)
+                    .eq('id', id);
+                if (error) throw error;
+            } else {
+                const {error} = await supabase
+                    .from('sales')
+                    .insert([data])
+                if (error) throw error;
+            }
+        },
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ['sales']});
+            onSuccess()
+        },
+    })
+}
