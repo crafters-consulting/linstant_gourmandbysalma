@@ -54,10 +54,11 @@ export function useSaleListQuery() {
     const supabase = useSupabaseClient();
 
     return useQuery({
-        queryKey: ['sale', 'list'],
+        queryKey: ['sales', 'list'],
         queryFn: async () => supabase
             .from('sales')
             .select('*')
+            .order('deliveryDateTime', { ascending: false })
             .then(it => it.data)
     })
 }
@@ -66,10 +67,11 @@ export function usePurchaseListQuery() {
     const supabase = useSupabaseClient();
 
     return useQuery({
-        queryKey: ['purchase', 'list'],
+        queryKey: ['purchases', 'list'],
         queryFn: async () => supabase
             .from('purchases')
             .select('*')
+            .order('date', { ascending: false })
             .then(it => it.data)
     })
 }
@@ -78,7 +80,7 @@ export function usePurchaseByIdQuery(id: string) {
     const supabase = useSupabaseClient();
 
     return useQuery({
-        queryKey: ['purchase', 'byId', id],
+        queryKey: ['purchases', 'byId', id],
         queryFn: async () => supabase
             .from('purchases')
             .select('*')
@@ -93,7 +95,7 @@ export function useSaleByIdQuery(id: string) {
     const supabase = useSupabaseClient();
 
     return useQuery({
-        queryKey: ['purchase', 'byId', id],
+        queryKey: ['sales', 'byId', id],
         queryFn: async () => supabase
             .from('sales')
             .select('*')

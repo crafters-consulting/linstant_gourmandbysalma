@@ -2,19 +2,45 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {Save} from 'lucide-react';
 import {useForm} from "react-hook-form"
 import {PageHeader} from "../../components";
-import {Sale, useSaveOrUpdateSaleMutation} from "../../hooks";
+import {Sale, useSaleByIdQuery, useSaveOrUpdateSaleMutation} from "../../hooks";
+import React, {useEffect} from "react";
 
 export function SaleForm() {
     const {id} = useParams();
+    return id ? <SaleEditForm id={id}/> : <SaleCreateForm/>
+}
+
+const SaleEditForm: React.FC<{ id: string }> = ({id}) => {
+    const {data, isLoading} = useSaleByIdQuery(id)
+
+    return isLoading || !data
+        ? "Chargement..."
+        : <SaleFormWithDefaultValues title="Modification de Vente" data={data}/>
+}
+
+const SaleCreateForm: React.FC = () => {
+    return <SaleFormWithDefaultValues title="Nouvelle Vente" data={{}}/>
+}
+
+const SaleFormWithDefaultValues: React.FC<{ data: Partial<Sale>, title: string }> = ({title, data}) => {
     const navigate = useNavigate();
-    const {register, handleSubmit} = useForm<Sale>();
+    const {register, watch, setValue, handleSubmit} = useForm<Partial<Sale>>({defaultValues: data});
+    const amount = watch('amount');
     const {mutate, isPending} = useSaveOrUpdateSaleMutation({
         onSuccess: () => navigate('/sales')
     })
 
+    useEffect(() => {
+        if (amount !== undefined) {
+            const deposit = Math.ceil(Math.ceil(amount * .3))
+            setValue('deposit', deposit);
+            setValue('remaining', amount - deposit);
+        }
+    }, [amount, setValue]);
+
     return (
-        <form onSubmit={handleSubmit(it => mutate({...it, id}))}>
-            <PageHeader title={id ? 'Modification de Vente' : 'Nouvelle Vente'}/>
+        <form onSubmit={handleSubmit(it => mutate(it))}>
+            <PageHeader title={title}/>
 
             <div className="card mb-6">
                 <div className="mb-6">
@@ -29,7 +55,12 @@ export function SaleForm() {
 
                 <div className="mb-6">
                     <label className="mb-2">Adresse de Livraison</label>
-                    <textarea {...register("deliveryAddress")} rows={3}/>
+                    <textarea {...register("deliveryAddress")} rows={2}/>
+                </div>
+
+                <div className="mb-6">
+                    <label className="mb-2">Commentaire</label>
+                    <textarea {...register("description")} rows={3}/>
                 </div>
 
                 <div className="mb-6">
@@ -52,7 +83,7 @@ export function SaleForm() {
                 <div className="mb-6">
                     <label className="block font-medium mb-2">Reste à Payer</label>
                     <div className="flex gap-4">
-                        <input {...register("remaining")} type="number" />
+                        <input {...register("remaining")} type="number"/>
                         <select {...register("remainingPaymentMethod")}>
                             <option value="Cash">Espèces</option>
                             <option value="Revolut">Revolut</option>
