@@ -1,9 +1,9 @@
+import React, {useEffect} from "react";
 import {useNavigate, useParams} from 'react-router-dom';
 import {Save} from 'lucide-react';
 import {useForm} from "react-hook-form"
 import {PageHeader} from "../../components";
 import {Sale, useSaleByIdQuery, useSaveOrUpdateSaleMutation} from "../../hooks";
-import React, {useEffect} from "react";
 
 export function SaleForm() {
     const {id} = useParams();
@@ -15,16 +15,26 @@ const SaleEditForm: React.FC<{ id: string }> = ({id}) => {
 
     return isLoading || !data
         ? "Chargement..."
-        : <SaleFormWithDefaultValues title="Modification de Vente" data={data}/>
+        : <SaleFormWithDefaultValues
+            title="Modification de Vente"
+            data={data}
+            backUrl={`/sales/${data.id}`}
+        />
 }
 
 const SaleCreateForm: React.FC = () => {
-    return <SaleFormWithDefaultValues title="Nouvelle Vente" data={{}}/>
+    return <SaleFormWithDefaultValues
+        title="Nouvelle Vente"
+        data={{} as Sale}
+        backUrl="/sales"
+    />
 }
 
-const SaleFormWithDefaultValues: React.FC<{ data: Partial<Sale>, title: string }> = ({title, data}) => {
+const SaleFormWithDefaultValues: React.FC<{
+    data: Sale, title: string, backUrl: string
+}> = ({title, data, backUrl}) => {
     const navigate = useNavigate();
-    const {register, watch, setValue, handleSubmit} = useForm<Partial<Sale>>({defaultValues: data});
+    const {register, watch, setValue, handleSubmit} = useForm<Sale>({defaultValues: data});
     const amount = watch('amount');
     const {mutate, isPending} = useSaveOrUpdateSaleMutation({
         onSuccess: () => navigate('/sales')
@@ -40,63 +50,63 @@ const SaleFormWithDefaultValues: React.FC<{ data: Partial<Sale>, title: string }
 
     return (
         <form onSubmit={handleSubmit(it => mutate(it))}>
-            <PageHeader title={title}/>
+            <PageHeader title={title} backUrl={backUrl}/>
 
-            <div className="card mb-6">
-                <div className="mb-6">
-                    <label className="mb-2">Date de Livraison</label>
-                    <input type="datetime-local"  {...register("deliveryDateTime")}/>
-                </div>
+            <main className="grid gap-4">
+                <div className="card mb-6">
+                    <div className="mb-6">
+                        <label className="mb-2">Date de Livraison</label>
+                        <input type="datetime-local"  {...register("deliveryDateTime")}/>
+                    </div>
 
-                <div className="mb-6">
-                    <label className="mb-2">Client</label>
-                    <input {...register("clientName")} />
-                </div>
+                    <div className="mb-6">
+                        <label className="mb-2">Client</label>
+                        <input {...register("clientName")} />
+                    </div>
 
-                <div className="mb-6">
-                    <label className="mb-2">Adresse de Livraison</label>
-                    <textarea {...register("deliveryAddress")} rows={2}/>
-                </div>
+                    <div className="mb-6">
+                        <label className="mb-2">Adresse de Livraison</label>
+                        <textarea {...register("deliveryAddress")} rows={2}/>
+                    </div>
 
-                <div className="mb-6">
-                    <label className="mb-2">Commentaire</label>
-                    <textarea {...register("description")} rows={3}/>
-                </div>
+                    <div className="mb-6">
+                        <label className="mb-2">Commentaire</label>
+                        <textarea {...register("description")} rows={3}/>
+                    </div>
 
-                <div className="mb-6">
-                    <label className="mb-2">Montant</label>
-                    <input {...register("amount")} type="number"/>
-                </div>
+                    <div className="mb-6">
+                        <label className="mb-2">Montant</label>
+                        <input {...register("amount")} type="number"/>
+                    </div>
 
-                <div className="mb-6">
-                    <label className="mb-2">Acompte</label>
-                    <div className="flex gap-4">
-                        <input {...register("deposit")} type="number"/>
-                        <select {...register("depositPaymentMethod")}>
-                            <option value="Revolut">Revolut</option>
-                            <option value="PayPal">PayPal</option>
-                            <option value="Cash">Espèces</option>
-                        </select>
+                    <div className="mb-6">
+                        <label className="mb-2">Acompte</label>
+                        <div className="flex gap-4">
+                            <input {...register("deposit")} type="number"/>
+                            <select {...register("depositPaymentMethod")}>
+                                <option value="Revolut">Revolut</option>
+                                <option value="PayPal">PayPal</option>
+                                <option value="Cash">Espèces</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="mb-6">
+                        <label className="block font-medium mb-2">Reste à Payer</label>
+                        <div className="flex gap-4">
+                            <input {...register("remaining")} type="number"/>
+                            <select {...register("remainingPaymentMethod")}>
+                                <option value="Cash">Espèces</option>
+                                <option value="Revolut">Revolut</option>
+                                <option value="PayPal">PayPal</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-
-                <div className="mb-6">
-                    <label className="block font-medium mb-2">Reste à Payer</label>
-                    <div className="flex gap-4">
-                        <input {...register("remaining")} type="number"/>
-                        <select {...register("remainingPaymentMethod")}>
-                            <option value="Cash">Espèces</option>
-                            <option value="Revolut">Revolut</option>
-                            <option value="PayPal">PayPal</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div className="flex justify-end">
-                <button type="submit" className="primary" disabled={isPending}>
+                <button type="submit" className="primary justify-center" disabled={isPending}>
                     <Save size={20}/> Enregistrer
                 </button>
-            </div>
+            </main>
         </form>
     );
 }

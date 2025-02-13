@@ -58,7 +58,7 @@ export function useSaleListQuery() {
         queryFn: async () => supabase
             .from('sales')
             .select('*')
-            .order('deliveryDateTime', { ascending: false })
+            .order('deliveryDateTime', {ascending: false})
             .then(it => it.data)
     })
 }
@@ -71,7 +71,7 @@ export function usePurchaseListQuery() {
         queryFn: async () => supabase
             .from('purchases')
             .select('*')
-            .order('date', { ascending: false })
+            .order('date', {ascending: false})
             .then(it => it.data)
     })
 }
@@ -156,4 +156,12 @@ export function useSaveOrUpdateSaleMutation({onSuccess}: { onSuccess: () => void
             onSuccess()
         },
     })
+}
+
+export function useDashboardDataQuery() {
+
+    return {
+        isLoading: false,
+        data: {},
+    }
 }

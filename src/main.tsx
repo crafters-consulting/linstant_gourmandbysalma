@@ -25,8 +25,7 @@ createRoot(document.getElementById('root')!).render(
             <HashRouter>
                 <div className="h-screen">
                     <Authenticated>
-                        <NavBar/>
-                        <main className="px-4 py-25">
+                        <div className="py-30">
                             <Routes>
                                 <Route index element={<Dashboard/>}/>
                                 <Route path="sales">
@@ -42,12 +41,9 @@ createRoot(document.getElementById('root')!).render(
                                     <Route path=":id/edit" element={<PurchaseForm/>}/>
                                 </Route>
                             </Routes>
-                        </main>
+                        </div>
+                        <NavBar/>
                     </Authenticated>
-                    <footer className="text-sm text-center py-6 mx-4 border-t-1 border-gray-300 text-gray-400">
-                        <p>A project by Crafters</p>
-                        <p>Copyright © {new Date().getFullYear()} L'instant Groumand by Salma</p>
-                    </footer>
                 </div>
             </HashRouter>
         </QueryClientProvider>

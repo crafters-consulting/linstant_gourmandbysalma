@@ -6,20 +6,21 @@ export function PurchaseView() {
     const {id} = useParams<{ id: string }>();
     const {data, isLoading} = usePurchaseByIdQuery(id!);
 
-    return isLoading || !data ? "Chargement..." : (
-        <div>
-            <PageHeader title="Achat"
-                        backUrl="/purchases"
-                        editUrl={`/purchases/${id}/edit`}/>
+    return (
+        <>
+            <PageHeader title="Detail de l'Achat"
+                        backUrl="/purchases"/>
 
-            <div className="card grid gap-4">
-                <p><strong>Date:</strong> {new Date(data.date).toLocaleDateString('fr-FR')}</p>
-                <p><strong>Amount:</strong> {data.amount.toLocaleString('fr-FR', {
-                    style: 'currency',
-                    currency: 'EUR'
-                })}</p>
-                <p><strong>Comment:</strong> {data.description}</p>
-            </div>
-        </div>
+            {isLoading || !data ? "Chargement..." : (
+                <main className="card grid gap-4">
+                    <p><strong>Date:</strong> {new Date(data.date).toLocaleDateString('fr-FR')}</p>
+                    <p><strong>Amount:</strong> {data.amount.toLocaleString('fr-FR', {
+                        style: 'currency',
+                        currency: 'EUR'
+                    })}</p>
+                    <p><strong>Comment:</strong> {data.description}</p>
+                </main>
+            )}
+        </>
     )
 }

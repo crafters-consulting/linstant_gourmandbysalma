@@ -14,28 +14,29 @@ export function PurchaseForm() {
 
     return (
         <form onSubmit={handleSubmit(it => mutate(it))}>
-            <PageHeader title={id ? "Modification d'Achat" : 'Nouvel Achat'}/>
+            <PageHeader title={id ? "Modification d'Achat" : 'Nouvel Achat'}
+            backUrl="/purchases"/>
 
-            <div className="card mb-6">
-                <div className="mb-6">
-                    <label>Date d'achat</label>
-                    <input type="date"  {...register("date")}/>
-                </div>
-                <div className="mb-6">
-                    <label>Amount</label>
-                    <input type="number" {...register("amount")} />
-                </div>
+            <main className="grid gap-10">
+                <div className="card">
+                    <div className="mb-6">
+                        <label>Date d'achat</label>
+                        <input type="date"  {...register("date")}/>
+                    </div>
+                    <div className="mb-6">
+                        <label>Amount</label>
+                        <input type="number" {...register("amount")} />
+                    </div>
 
-                <div className="mb-6">
-                    <label>Commentaire</label>
-                    <textarea {...register("description")} rows={3}/>
+                    <div className="mb-6">
+                        <label>Commentaire</label>
+                        <textarea {...register("description")} rows={3}/>
+                    </div>
                 </div>
-            </div>
-            <div className="flex justify-end">
-                <button type="submit" className="primary" disabled={isPending}>
+                <button type="submit" className="primary justify-center" disabled={isPending}>
                     <Save size={20}/> Enregistrer
                 </button>
-            </div>
+            </main>
         </form>
     );
 }
