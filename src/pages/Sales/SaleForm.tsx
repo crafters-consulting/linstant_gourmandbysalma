@@ -103,7 +103,7 @@ const SaleFormWithDefaultValues: React.FC<{
                         </div>
                     </div>
                 </div>
-                <button type="submit" className="primary justify-center" disabled={isPending}>
+                <button type="submit" className="primary" disabled={isPending}>
                     <Save size={20}/> Enregistrer
                 </button>
             </main>

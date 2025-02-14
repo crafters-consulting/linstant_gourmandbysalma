@@ -48,10 +48,10 @@ export function SaleView() {
                     </article>
                     {isFuture(data.deliveryDateTime) && (
                         <>
-                            <Link to={`/sales/${id}/edit`} className="button primary justify-center">
+                            <Link to={`/sales/${id}/edit`} className="button primary">
                                 <Edit size={20}/> Modifier
                             </Link>
-                            <button className="danger justify-center">
+                            <button className="danger">
                                 <Trash size={20}/> Supprimer
                             </button>
                         </>

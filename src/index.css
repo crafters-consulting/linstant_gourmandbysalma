@@ -2,6 +2,7 @@
 
 html, body {
     font-size: 16px;
+    @apply bg-white
 }
 
 main {
@@ -13,7 +14,7 @@ label {
 }
 
 input, textarea {
-    @apply border border-gray-300 rounded-sm px-2 py-1 w-full text-base
+    @apply border border-gray-300 rounded-sm px-3 py-2 w-full text-base
 }
 
 h1 {
@@ -25,7 +26,7 @@ h2 {
 }
 
 button, .button {
-    @apply flex items-center gap-2 rounded-sm px-4 py-2
+    @apply flex items-center justify-center gap-2 rounded-sm px-4 py-2
 }
 
 button.primary, .button.primary {
