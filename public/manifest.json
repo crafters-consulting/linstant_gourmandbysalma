@@ -4,7 +4,7 @@
   "description": "L'Instant Gourmand by Salma",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f9fafb",
+  "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [
     {
