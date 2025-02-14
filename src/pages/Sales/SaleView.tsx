@@ -15,24 +15,24 @@ export function SaleView() {
 
             {isLoading || !data ? "Chargement..." : (
                 <main className="grid gap-4">
-                    <article className="bg-white rounded-lg shadow-md p-4">
+                    <article className="card">
                         <label>Date de livraison</label>
                         <p>{format(data.deliveryDateTime, 'EEEE dd LLLL yyyy à HH:mm', {locale: fr})}</p>
                     </article>
-                    <article className="bg-white rounded-lg shadow-md p-4">
+                    <article className="card">
                         <label>Client</label>
                         <p>{data.clientName}</p>
                     </article>
-                    <article className="bg-white rounded-lg shadow-md p-4">
+                    <article className="card">
                         <label>Adresse de livraison</label>
                         <p>{data.deliveryAddress}</p>
                     </article>
-                    <article className="bg-white rounded-lg shadow-md p-4">
+                    <article className="card">
                         <label>Commentaire</label>
                         <p>{data.description}</p>
                     </article>
 
-                    <article className="bg-white rounded-lg shadow-md p-4 mb-6 grid gap-4 grid-cols-3">
+                    <article className="card flex justify-between gap-4">
                         <div>
                             <label>Montant</label>
                             <p>{data.amount.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</p>

@@ -13,13 +13,13 @@ export function SaleList() {
             <main className="grid gap-4">
                 {isLoading || !data ? "" : data.map((it) => (
                     <Link key={it.id} to={`/sales/${it.id}`}
-                        className={`p-6 rounded-lg shadow-md ${isPast(it.deliveryDateTime) ? 'bg-gray-100' : 'bg-white'}`}>
+                        className={`card ${isPast(it.deliveryDateTime) ? '!bg-gray-100' : ''}`}>
                         <h2 className="text-lg font-medium">
                             {format(it.deliveryDateTime, 'dd/MM/yyyy')}
                         </h2>
                         <p className="text-slate-600 font-bold">{it.clientName}</p>
                         <p className="text-slate-600">{it.deliveryAddress}</p>
-                        <div className="grid grid-cols-5 gap-4 mt-4">
+                        <div className="flex justify-between gap-4 mt-4">
                             <p className="text-center font-bold text-green-500">
                                 {it.deposit.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}
                             </p>
