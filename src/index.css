@@ -2,7 +2,6 @@
 
 html, body {
     font-size: 16px;
-    @apply bg-white
 }
 
 main {
