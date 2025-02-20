@@ -1,6 +1,6 @@
 import React from "react";
 import {LinkProps, NavLink} from "react-router-dom";
-import {Euro, GaugeCircle, ShoppingCart} from "lucide-react";
+import {Euro, GaugeCircle, Landmark, ShoppingCart} from "lucide-react";
 
 const MenuLink: React.FC<LinkProps> = (props) => (
     <NavLink {...props} className="nav-link text-white px-8 pt-4 pb-8"/>
@@ -11,5 +11,6 @@ export const NavBar: React.FC = () => (
         <MenuLink to="/"><GaugeCircle/></MenuLink>
         <MenuLink to="/sales"><Euro/></MenuLink>
         <MenuLink to="/purchases"><ShoppingCart/></MenuLink>
+        <MenuLink to="/report-taxes"><Landmark/></MenuLink>
     </nav>
 )

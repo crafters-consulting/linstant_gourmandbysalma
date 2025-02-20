@@ -3,7 +3,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {Save} from 'lucide-react';
 import {useForm} from "react-hook-form"
 import {PageHeader} from "../../components";
-import {Sale, useSaleByIdQuery, useSaveOrUpdateSaleMutation} from "../../hooks";
+import {Sale, useSaleByIdQuery, useUpsertSaleMutation} from "../../hooks";
 
 export function SaleForm() {
     const {id} = useParams();
@@ -36,7 +36,7 @@ const SaleFormWithDefaultValues: React.FC<{
     const navigate = useNavigate();
     const {register, watch, setValue, handleSubmit} = useForm<Sale>({defaultValues: data});
     const amount = watch('amount');
-    const {mutate, isPending} = useSaveOrUpdateSaleMutation({
+    const {mutate, isPending} = useUpsertSaleMutation({
         onSuccess: () => navigate('/sales')
     })
 

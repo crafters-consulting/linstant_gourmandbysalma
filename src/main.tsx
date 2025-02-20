@@ -8,7 +8,8 @@ import {NavBar} from "./components/NavBar";
 import {Authenticated} from "./pages/Auth";
 import {Dashboard} from "./pages/Dashboard";
 import {SaleForm, SaleList, SaleView} from "./pages/Sales";
-import {PurchaseForm, PurchaseList, PurchaseView} from "./pages/Purchases";
+import {PurchaseCreate, PurchaseList, PurchaseView} from "./pages/Purchases";
+import {ReportTaxes} from "./pages/taxes";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -36,10 +37,10 @@ createRoot(document.getElementById('root')!).render(
                                 </Route>
                                 <Route path="purchases">
                                     <Route index element={<PurchaseList/>}/>
-                                    <Route path="new" element={<PurchaseForm/>}/>
+                                    <Route path="new" element={<PurchaseCreate/>}/>
                                     <Route path=":id" element={<PurchaseView/>}/>
-                                    <Route path=":id/edit" element={<PurchaseForm/>}/>
                                 </Route>
+                                <Route path="report-taxes" element={<ReportTaxes/>}/>
                             </Routes>
                         </div>
                         <NavBar/>
