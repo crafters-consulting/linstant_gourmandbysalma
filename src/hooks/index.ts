@@ -13,7 +13,7 @@ export {useDashboardDataQuery} from './useDashboardDataQuery';
 
 // Sales
 export {useSaleListQuery} from './useSaleListQuery';
-export {useFutureSalesQuery} from './useFutureSalesQuery';
+export {useSalePendingQuery} from './useSalePendingQuery';
 export {useSaleByIdQuery} from './useSaleByIdQuery';
 export {useSaleUpsertMutation} from './useSaleUpsertMutation';
 

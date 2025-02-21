@@ -2,7 +2,7 @@ import {useSupabaseClient} from "./useSupabaseClient.ts";
 import {useQuery} from "@tanstack/react-query";
 import {format} from "date-fns";
 
-export function useFutureSalesQuery() {
+export function useSalePendingQuery() {
     const supabase = useSupabaseClient();
 
     return useQuery({
