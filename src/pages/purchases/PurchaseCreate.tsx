@@ -24,8 +24,8 @@ export function PurchaseCreate() {
                         <input type="date"  {...register("date")}/>
                     </div>
                     <div className="mb-6">
-                        <label>Amount</label>
-                        <input type="number" {...register("amount")} />
+                        <label>Montant</label>
+                        <input type="number" step="0.01" {...register("amount")} />
                     </div>
                     <div className="mb-6">
                         <label>Commentaire</label>

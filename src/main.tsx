@@ -5,10 +5,10 @@ import {createRoot} from 'react-dom/client';
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {NavBar} from "./components/NavBar";
-import {Authenticated} from "./pages/Auth";
-import {Dashboard} from "./pages/Dashboard";
-import {SaleForm, SaleList, SaleView} from "./pages/Sales";
-import {PurchaseCreate, PurchaseList, PurchaseView} from "./pages/Purchases";
+import {Authenticated} from "./components/Auth";
+import {Dashboard} from "./pages/dashboard";
+import {SaleForm, SaleList, SaleView} from "./pages/sales";
+import {PurchaseCreate, PurchaseList, PurchaseView} from "./pages/purchases";
 import {ReportTaxes} from "./pages/taxes";
 
 const queryClient = new QueryClient({

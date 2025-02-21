@@ -76,13 +76,13 @@ const SaleFormWithDefaultValues: React.FC<{
 
                     <div className="mb-6">
                         <label className="mb-2">Montant</label>
-                        <input {...register("amount")} type="number"/>
+                        <input {...register("amount")} type="number" step="0.01"/>
                     </div>
 
                     <div className="mb-6">
                         <label className="mb-2">Acompte</label>
                         <div className="flex gap-4">
-                            <input {...register("deposit")} type="number"/>
+                            <input {...register("deposit")} type="number" step="0.01"/>
                             <select {...register("depositPaymentMethod")}>
                                 <option value="Revolut">Revolut</option>
                                 <option value="PayPal">PayPal</option>
@@ -94,7 +94,7 @@ const SaleFormWithDefaultValues: React.FC<{
                     <div className="mb-6">
                         <label className="block font-medium mb-2">Reste à Payer</label>
                         <div className="flex gap-4">
-                            <input {...register("remaining")} type="number"/>
+                            <input {...register("remaining")} type="number" step="0.01"/>
                             <select {...register("remainingPaymentMethod")}>
                                 <option value="Cash">Espèces</option>
                                 <option value="Revolut">Revolut</option>
