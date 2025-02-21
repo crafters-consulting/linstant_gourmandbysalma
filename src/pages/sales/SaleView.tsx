@@ -1,9 +1,9 @@
 import {Link, useParams} from 'react-router';
 import {PageHeader} from "../../components";
-import {useSaleByIdQuery} from "../../hooks";
 import {Edit, Trash} from "lucide-react";
 import {format, isFuture} from "date-fns";
 import {fr} from "date-fns/locale";
+import {useSaleByIdQuery} from "../../hooks";
 
 export function SaleView() {
     const {id} = useParams<{ id: string }>();

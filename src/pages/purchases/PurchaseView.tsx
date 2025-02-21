@@ -1,9 +1,9 @@
 import {useParams} from 'react-router';
-import {usePurchaseByIdQuery, usePurchaseSalesByPurchaseIdQuery} from "../../hooks";
 import {PageHeader} from "../../components";
 import {format} from "date-fns";
 import {fr} from "date-fns/locale";
 import {Trash} from "lucide-react";
+import {usePurchaseByIdQuery, usePurchaseSalesByPurchaseIdQuery} from "../../hooks";
 
 export function PurchaseView() {
     const {id} = useParams<{ id: string }>();

@@ -3,13 +3,13 @@ import {useForm} from "react-hook-form";
 import {Save} from 'lucide-react';
 import {format} from "date-fns";
 import {PageHeader} from "../../components";
-import {type Purchase, useFutureSalesQuery, useInsertPurchaseMutation} from "../../hooks";
+import {type Purchase, useFutureSalesQuery, usePurchaseInsertMutation} from "../../hooks";
 
 export function PurchaseCreate() {
     const navigate = useNavigate();
     const {register, handleSubmit} = useForm<Purchase & { affectedSales: string[] }>();
     const {data, isLoading} = useFutureSalesQuery();
-    const {mutate, isPending} = useInsertPurchaseMutation({
+    const {mutate, isPending} = usePurchaseInsertMutation({
         onSuccess: () => navigate('/purchases')
     })
 
