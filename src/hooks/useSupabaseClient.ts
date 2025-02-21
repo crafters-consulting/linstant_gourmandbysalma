@@ -1,6 +1,6 @@
-import {useMemo} from "react";
-import {createClient, type SupabaseClient} from "@supabase/supabase-js";
-import type {Database} from "./database.types.ts";
+import { useMemo } from 'react'
+import { createClient, type SupabaseClient } from '@supabase/supabase-js'
+import type { Database } from './database.types.ts'
 
 let client: SupabaseClient<Database>
 

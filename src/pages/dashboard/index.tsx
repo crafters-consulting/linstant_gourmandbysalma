@@ -7,10 +7,10 @@ import {
     Title,
     Tooltip,
     Legend,
-} from 'chart.js';
-import {Line} from 'react-chartjs-2';
-import {PageHeader} from "../../components";
-import {useDashboardDataQuery} from "../../hooks";
+} from 'chart.js'
+import { Line } from 'react-chartjs-2'
+import { HeaderBar } from '../../components'
+import { useDashboardDataQuery } from '../../hooks'
 
 ChartJS.register(
     CategoryScale,
@@ -20,20 +20,22 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend
-);
+)
 
 export const Dashboard = () => {
-    const {data, isLoading} = useDashboardDataQuery()
+    const { data, isLoading } = useDashboardDataQuery()
 
     return (
         <>
-            <PageHeader title="Tableau de Board"/>
+            <HeaderBar title='Tableau de Board' />
             <main>
-                {isLoading || !data ? "Chargement..." : (
-                    <div className="card mb-8">
-                        <h2 className="mb-4">Ventes / Achats par mois</h2>
+                {isLoading || !data ? (
+                    'Chargement...'
+                ) : (
+                    <div className='card mb-8'>
+                        <h2 className='mb-4'>Ventes / Achats par mois</h2>
 
-                        <Line data={data}/>
+                        <Line data={data} />
                     </div>
                 )}
             </main>

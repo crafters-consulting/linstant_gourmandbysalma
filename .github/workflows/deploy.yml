@@ -1,33 +1,30 @@
 name: Github Pages Deployer
 
 on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
+    push:
+        branches: ['main']
+    workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+    contents: read
+    pages: write
+    id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    group: 'pages'
+    cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    environment:
-      name: demo
-      url: ${{ steps.deploy_to_pages.outputs.github_pages_url }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Vite Github Pages Deployer
-        uses: skywarth/vite-github-pages-deployer@master
-        id: deploy_to_pages
-        with:
-          public_base_path: /
-
-      
-          
+    build:
+        runs-on: ubuntu-latest
+        environment:
+            name: demo
+            url: ${{ steps.deploy_to_pages.outputs.github_pages_url }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Vite Github Pages Deployer
+              uses: skywarth/vite-github-pages-deployer@master
+              id: deploy_to_pages
+              with:
+                  public_base_path: /

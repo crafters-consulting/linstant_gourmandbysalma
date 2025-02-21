@@ -1,19 +1,29 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-html, body {
+html,
+body {
     font-size: 16px;
+}
+
+header {
+    padding-top: env(safe-area-inset-top);
 }
 
 main {
     @apply mx-4;
 }
 
-label {
-    @apply block font-medium mb-2
+footer {
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
-input, textarea {
-    @apply border border-gray-300 rounded-sm px-3 py-2 w-full text-base
+label {
+    @apply block font-medium mb-2;
+}
+
+input,
+textarea {
+    @apply border border-gray-300 rounded-sm px-3 py-2 w-full text-base;
 }
 
 h1 {
@@ -24,28 +34,31 @@ h2 {
     @apply text-lg font-medium;
 }
 
-button, .button {
-    @apply flex items-center justify-center gap-2 rounded-sm px-4 py-2
+button,
+.button {
+    @apply flex items-center justify-center gap-2 rounded-sm px-4 py-2;
 }
 
-button.primary, .button.primary {
-    @apply bg-purple-800 text-white px-4 py-2
+button.primary,
+.button.primary {
+    @apply bg-purple-800 text-white px-4 py-2;
 }
 
-button.danger, .button.danger {
-    @apply bg-red-600 text-white px-4 py-2
+button.danger,
+.button.danger {
+    @apply bg-red-600 text-white px-4 py-2;
 }
 
 .card {
-    @apply bg-white p-4 rounded-lg shadow-md
+    @apply bg-white p-4 rounded-lg shadow-md;
 }
 
 .hstack {
-    @apply flex items-center justify-between
+    @apply flex items-center justify-between;
 }
 
 a.nav-link.active {
-    @apply text-purple-200
+    @apply text-purple-200;
 }
 
 a.nav-link.active svg {
