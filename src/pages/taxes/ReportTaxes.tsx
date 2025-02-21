@@ -11,16 +11,15 @@ export function ReportTaxes() {
 
             <main className="grid gap-4">
                 {isLoading || !data ? "" : data.map((it) => (
-                    <article key={it.date}  className="card">
-                        <h2 className="text-lg font-medium">
-                            {format(it.date, 'MMMM yyyy', {locale: fr})}
-                        </h2>
-                        <div className="flex justify-between gap-4 mt-4">
-                            <p className="text-slate-600 font-bold">Montant</p>
-                            <p className="text-right font-bold">
-                                {it.amount.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}
-                            </p>
-                        </div>
+                    <article key={it.date} className="card flex justify-between gap-4 mt-4">
+                        <p className="text-slate-600 font-bold">
+                            <h2 className="text-lg font-medium">
+                                {format(it.date, 'MMMM yyyy', {locale: fr})}
+                            </h2>
+                        </p>
+                        <p className="text-right font-bold">
+                            {it.amount.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}
+                        </p>
                     </article>
                 ))}
             </main>

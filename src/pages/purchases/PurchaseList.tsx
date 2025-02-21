@@ -14,12 +14,12 @@ export function PurchaseList() {
                     <Link key={it.id} to={`/purchases/${it.id}`} className="card">
                         <div className="flex items-center justify-between">
                             <h2 className="text-lg font-medium">{format(it.date, 'dd/MM/yyyy')}</h2>
-                            <p className="font-bold">{it.amount.toLocaleString('fr-FR', {
+                            <p className="text-lg font-bold">{it.amount.toLocaleString('fr-FR', {
                                 style: 'currency',
                                 currency: 'EUR'
                             })}</p>
                         </div>
-                        <p className="text-slate-600">{it.description}</p>
+                        <p className="text-slate-500">{it.description}</p>
                     </Link>
                 ))}
             </main>
