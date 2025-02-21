@@ -7,7 +7,7 @@ export const HeaderBar: React.FC<{
     backUrl?: string
     createUrl?: string
 }> = ({ title, backUrl, createUrl }) => (
-    <header className="flex items-center px-4 mb-8 gap-4 shadow-md fixed w-screen bg-white top-0 h-18">
+    <header className="flex items-center px-4 mb-8 gap-4 shadow-md fixed w-screen bg-white top-0 h-16">
         {backUrl && (
             <Link
                 to={backUrl}
