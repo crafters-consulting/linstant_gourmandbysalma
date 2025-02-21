@@ -1,4 +1,4 @@
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import {useForm} from "react-hook-form";
 import {Save} from 'lucide-react';
 import {format} from "date-fns";

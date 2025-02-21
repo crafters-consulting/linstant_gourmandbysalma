@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link} from "react-router";
 import {format, isPast} from "date-fns";
 import {PageHeader} from "../../components";
 import {useSaleListQuery} from "../../hooks";

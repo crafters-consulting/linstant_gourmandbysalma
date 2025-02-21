@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router';
 import {Save} from 'lucide-react';
 import {useForm} from "react-hook-form"
 import {PageHeader} from "../../components";

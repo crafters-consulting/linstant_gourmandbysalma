@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom';
+import {useParams} from 'react-router';
 import {usePurchaseByIdQuery, usePurchaseSalesByPurchaseIdQuery} from "../../hooks";
 import {PageHeader} from "../../components";
 import {format} from "date-fns";

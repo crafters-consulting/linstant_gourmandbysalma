@@ -1,4 +1,4 @@
-import {Link, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router';
 import {PageHeader} from "../../components";
 import {useSaleByIdQuery} from "../../hooks";
 import {Edit, Trash} from "lucide-react";

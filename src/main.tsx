@@ -2,7 +2,7 @@ import './index.css';
 
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {NavBar} from "./components/NavBar";
 import {Authenticated} from "./components/Auth";

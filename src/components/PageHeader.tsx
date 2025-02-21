@@ -1,5 +1,5 @@
 import {ArrowLeft, Plus} from "lucide-react";
-import {Link} from "react-router-dom";
+import {Link} from "react-router";
 import React from "react";
 
 export const PageHeader: React.FC<{

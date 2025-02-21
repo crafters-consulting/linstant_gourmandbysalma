@@ -1,5 +1,5 @@
 import React from "react";
-import {LinkProps, NavLink} from "react-router-dom";
+import {LinkProps, NavLink} from "react-router";
 import {Euro, GaugeCircle, Landmark, ShoppingCart} from "lucide-react";
 
 const MenuLink: React.FC<LinkProps> = (props) => (
