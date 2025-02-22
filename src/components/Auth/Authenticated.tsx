@@ -1,8 +1,13 @@
-import type { FC, PropsWithChildren } from 'react'
-import { useSupabaseSession } from '../../hooks'
-import { SignIn } from './SignIn.tsx'
+import type { FC, PropsWithChildren } from "react"
+import { useSupabaseSession } from "../../hooks"
+import { SignIn } from "./SignIn.tsx"
 
 export const Authenticated: FC<PropsWithChildren> = ({ children }) => {
-    const session = useSupabaseSession()
-    return session ? children : <SignIn />
+    const { session, isLoading } = useSupabaseSession()
+    return isLoading
+        ? "Chargement..."
+        : (session
+                ? children
+                : <SignIn />
+        )
 }

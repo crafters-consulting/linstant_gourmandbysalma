@@ -1,9 +1,9 @@
-import { useSaleListQuery } from './useSaleListQuery.ts'
-import { useMemo } from 'react'
-import { format } from 'date-fns'
-import { fr } from 'date-fns/locale'
-import { usePurchaseListQuery } from './usePurchaseListQuery.ts'
-import { Purchase, Sale } from './index.ts'
+import { useSaleListQuery } from "./useSaleListQuery.ts"
+import { useMemo } from "react"
+import { format } from "date-fns"
+import { fr } from "date-fns/locale"
+import { usePurchaseListQuery } from "./usePurchaseListQuery.ts"
+import { Purchase, Sale } from "./index.ts"
 
 export type DashboardData = {
     date: string
@@ -30,7 +30,7 @@ const purchaseToDashboardData = (it: Purchase) =>
 
 function joinSalesAndPurchase(
     saleData: Sale[] | null | undefined,
-    purchaseData: Purchase[] | null | undefined,
+    purchaseData: Purchase[] | null | undefined
 ) {
     return [
         ...(saleData || []).map(saleToDashboardData),
@@ -49,11 +49,11 @@ export function useDashboardDataQuery() {
                 .sort((a, b) =>
                     a.date
                         .substring(0, 10)
-                        .localeCompare(b.date.substring(0, 10)),
+                        .localeCompare(b.date.substring(0, 10))
                 )
                 .map((it) => ({
                     ...it,
-                    date: format(it.date, 'MMMM yyyy', { locale: fr }),
+                    date: format(it.date, "MMMM yyyy", { locale: fr }),
                 }))
                 .reduce<Record<string, DashboardData>>(
                     (acc, it) => ({
@@ -74,15 +74,15 @@ export function useDashboardDataQuery() {
                                     : 0) + it.purchase,
                         },
                     }),
-                    {} as Record<string, DashboardData>,
-                ),
+                    {} as Record<string, DashboardData>
+                )
         )
 
-        const currentMonth = format(new Date(), 'MMMM yyyy', { locale: fr })
+        const currentMonth = format(new Date(), "MMMM yyyy", { locale: fr })
 
         return {
-            currentMonth: results.find(it => it.date === currentMonth),
-            lastMonths: results
+            currentMonth: results.find((it) => it.date === currentMonth)!,
+            lastMonths: results,
         }
     }, [saleData, purchaseData])
 

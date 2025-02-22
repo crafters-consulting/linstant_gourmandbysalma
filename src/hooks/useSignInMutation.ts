@@ -1,5 +1,5 @@
-import { useSupabaseClient } from './useSupabaseClient.ts'
-import { useMutation } from '@tanstack/react-query'
+import { useSupabaseClient } from "./useSupabaseClient.ts"
+import { useMutation } from "@tanstack/react-query"
 
 export function useSignInMutation() {
     const supabaseClient = useSupabaseClient()
@@ -9,7 +9,7 @@ export function useSignInMutation() {
     }) => {
         const { data, error } =
             await supabaseClient.auth.signInWithPassword(form)
-        if (error) throw ''
+        if (error) throw ""
         return data
     }
 

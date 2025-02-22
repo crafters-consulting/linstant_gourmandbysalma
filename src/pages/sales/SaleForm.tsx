@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import { Save } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { HeaderBar } from '../../components'
-import { type Sale, useSaleUpsertMutation } from '../../hooks'
-
+import React, { useEffect } from "react"
+import { useNavigate } from "react-router"
+import { Save } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { HeaderBar } from "../../components"
+import { type Sale, useSaleUpsertMutation } from "../../hooks"
 
 export const SaleForm: React.FC<{
     data: Partial<Sale>
@@ -15,16 +14,16 @@ export const SaleForm: React.FC<{
     const { register, watch, setValue, handleSubmit } = useForm<Sale>({
         defaultValues: data,
     })
-    const amount = watch('amount')
+    const amount = watch("amount")
     const { mutate, isPending } = useSaleUpsertMutation({
-        onSuccess: () => navigate('/sales'),
+        onSuccess: () => navigate("/sales"),
     })
 
     useEffect(() => {
         if (amount !== undefined) {
             const deposit = Math.ceil(Math.ceil(amount * 0.3))
-            setValue('deposit', deposit)
-            setValue('remaining', amount - deposit)
+            setValue("deposit", deposit)
+            setValue("remaining", amount - deposit)
         }
     }, [amount, setValue])
 
@@ -41,19 +40,19 @@ export const SaleForm: React.FC<{
                         <label className="mb-2">Date de Livraison</label>
                         <input
                             type="datetime-local"
-                            {...register('deliveryDateTime')}
+                            {...register("deliveryDateTime")}
                         />
                     </div>
 
                     <div className="mb-6">
                         <label className="mb-2">Client</label>
-                        <input {...register('clientName')} />
+                        <input {...register("clientName")} />
                     </div>
 
                     <div className="mb-6">
                         <label className="mb-2">Adresse de Livraison</label>
                         <textarea
-                            {...register('deliveryAddress')}
+                            {...register("deliveryAddress")}
                             rows={2}
                         />
                     </div>
@@ -61,7 +60,7 @@ export const SaleForm: React.FC<{
                     <div className="mb-6">
                         <label className="mb-2">Commentaire</label>
                         <textarea
-                            {...register('description')}
+                            {...register("description")}
                             rows={3}
                         />
                     </div>
@@ -69,7 +68,7 @@ export const SaleForm: React.FC<{
                     <div className="mb-6">
                         <label className="mb-2">Montant</label>
                         <input
-                            {...register('amount')}
+                            {...register("amount")}
                             type="number"
                             step="0.01"
                         />
@@ -79,11 +78,11 @@ export const SaleForm: React.FC<{
                         <label className="mb-2">Acompte</label>
                         <div className="flex gap-4">
                             <input
-                                {...register('deposit')}
+                                {...register("deposit")}
                                 type="number"
                                 step="0.01"
                             />
-                            <select {...register('depositPaymentMethod')}>
+                            <select {...register("depositPaymentMethod")}>
                                 <option value="Revolut">Revolut</option>
                                 <option value="PayPal">PayPal</option>
                                 <option value="Cash">Espèces</option>
@@ -97,11 +96,11 @@ export const SaleForm: React.FC<{
                         </label>
                         <div className="flex gap-4">
                             <input
-                                {...register('remaining')}
+                                {...register("remaining")}
                                 type="number"
                                 step="0.01"
                             />
-                            <select {...register('remainingPaymentMethod')}>
+                            <select {...register("remainingPaymentMethod")}>
                                 <option value="Cash">Espèces</option>
                                 <option value="Revolut">Revolut</option>
                                 <option value="PayPal">PayPal</option>
@@ -112,8 +111,7 @@ export const SaleForm: React.FC<{
                 <button
                     type="submit"
                     className="primary"
-                    disabled={isPending}
-                >
+                    disabled={isPending}>
                     <Save size={20} /> Enregistrer
                 </button>
             </main>

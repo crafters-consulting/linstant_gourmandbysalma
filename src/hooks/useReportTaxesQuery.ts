@@ -1,6 +1,6 @@
-import { useSaleListQuery } from './useSaleListQuery.ts'
-import { useMemo } from 'react'
-import { Sale } from './index.ts'
+import { useSaleListQuery } from "./useSaleListQuery.ts"
+import { useMemo } from "react"
+import { Sale } from "./index.ts"
 
 type ReportTaxe = {
     date: string
@@ -17,10 +17,10 @@ function getReportTaxes(data: Sale[]) {
                         date: it.deliveryDateTime,
                         dateMonth: it.deliveryDateTime.substring(0, 7),
                         amount:
-                            (it.depositPaymentMethod === 'Cash'
+                            (it.depositPaymentMethod === "Cash"
                                 ? 0
                                 : it.deposit) +
-                            (it.remainingPaymentMethod === 'Cash'
+                            (it.remainingPaymentMethod === "Cash"
                                 ? 0
                                 : it.remaining),
                     }) as ReportTaxe

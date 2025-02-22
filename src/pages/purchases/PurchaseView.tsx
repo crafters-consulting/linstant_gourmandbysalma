@@ -1,12 +1,12 @@
-import { useParams } from 'react-router'
-import { HeaderBar } from '../../components'
-import { format } from 'date-fns'
-import { fr } from 'date-fns/locale'
-import { Trash } from 'lucide-react'
+import { useParams } from "react-router"
+import { HeaderBar } from "../../components"
+import { format } from "date-fns"
+import { fr } from "date-fns/locale"
+import { Trash } from "lucide-react"
 import {
     usePurchaseByIdQuery,
     usePurchaseSalesByPurchaseIdQuery,
-} from '../../hooks'
+} from "../../hooks"
 
 export function PurchaseView() {
     const { id } = useParams<{ id: string }>()
@@ -18,35 +18,35 @@ export function PurchaseView() {
         <>
             <HeaderBar
                 title="Detail de l'Achat"
-                backUrl='/purchases'
+                backUrl="/purchases"
             />
 
             {isLoading || !data ? (
-                'Chargement...'
+                "Chargement..."
             ) : (
-                <main className='grid gap-4'>
-                    <article className='card'>
+                <main className="grid gap-4">
+                    <article className="card">
                         <label>Date</label>
                         <p>
-                            {format(data.date, 'EEEE dd LLLL yyyy à HH:mm', {
+                            {format(data.date, "EEEE dd LLLL yyyy à HH:mm", {
                                 locale: fr,
                             })}
                         </p>
                     </article>
-                    <article className='card'>
+                    <article className="card">
                         <label>Amount</label>
                         <p>
-                            {data.amount.toLocaleString('fr-FR', {
-                                style: 'currency',
-                                currency: 'EUR',
+                            {data.amount.toLocaleString("fr-FR", {
+                                style: "currency",
+                                currency: "EUR",
                             })}
                         </p>
                     </article>
-                    <article className='card'>
+                    <article className="card">
                         <label>Comment</label>
                         <p>{data.description}</p>
                     </article>
-                    <article className='card'>
+                    <article className="card">
                         <label>Ventes Concernées</label>
                         <p>
                             {!isLoadingPurchaseSales &&
@@ -55,15 +55,15 @@ export function PurchaseView() {
                                     <li key={it.sale_id}>
                                         {format(
                                             it.sales.deliveryDateTime,
-                                            'dd/MM/yyyy HH:mm'
-                                        )}{' '}
+                                            "dd/MM/yyyy HH:mm"
+                                        )}{" "}
                                         - {it.sales.clientName}
                                     </li>
                                 ))}
                         </p>
                     </article>
 
-                    <button className='danger'>
+                    <button className="danger">
                         <Trash size={20} /> Supprimer
                     </button>
                 </main>

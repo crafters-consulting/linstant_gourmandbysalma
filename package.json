@@ -1,43 +1,42 @@
 {
-  "name": "vite-react-typescript-starter",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "format": "prettier --write --ignore-unknown .",
-    "gen": "npx supabase gen types typescript --linked --schema=public > ./src/hooks/database.types.ts"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.48.1",
-    "@tanstack/react-query": "^5.66.0",
-    "date-fns": "^4.1.0",
-    "es-toolkit": "^1.32.0",
-    "lucide-react": "^0.344.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-hook-form": "^7.54.2",
-    "react-router": "^7.2.0",
-    "recharts": "^2.15.1"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.9.1",
-    "@tailwindcss/vite": "^4.0.6",
-    "@tsconfig/vite-react": "^2.0.0",
-    "@types/react": "^18.3.5",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^9.9.1",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "^0.4.11",
-    "globals": "^15.9.0",
-    "prettier": "^3.5.1",
-    "tailwindcss": "^4.0.6",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "^8.3.0",
-    "vite": "^5.4.2"
-  }
+    "name": "vite-react-typescript-starter",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "eslint .",
+        "preview": "vite preview",
+        "format": "prettier --write --ignore-unknown .",
+        "gen": "npx supabase gen types typescript --linked --schema=public > ./src/hooks/database.types.ts"
+    },
+    "dependencies": {
+        "@supabase/supabase-js": "^2.48.1",
+        "@tanstack/react-query": "^5.66.0",
+        "date-fns": "^4.1.0",
+        "lucide-react": "^0.344.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-hook-form": "^7.54.2",
+        "react-router": "^7.2.0",
+        "recharts": "^2.15.1"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.9.1",
+        "@tailwindcss/vite": "^4.0.6",
+        "@tsconfig/vite-react": "^2.0.0",
+        "@types/react": "^18.3.5",
+        "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-react": "^4.3.1",
+        "eslint": "^9.9.1",
+        "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+        "eslint-plugin-react-refresh": "^0.4.11",
+        "globals": "^15.9.0",
+        "prettier": "^3.5.1",
+        "tailwindcss": "^4.0.6",
+        "typescript": "^5.5.3",
+        "typescript-eslint": "^8.3.0",
+        "vite": "^5.4.2"
+    }
 }

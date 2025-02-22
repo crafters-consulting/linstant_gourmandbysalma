@@ -1,1 +1,1 @@
-export { Authenticated } from './Authenticated.tsx'
+export { Authenticated } from "./Authenticated.tsx"

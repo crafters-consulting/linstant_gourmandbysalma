@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useSupabaseClient } from './useSupabaseClient.ts'
-import { Sale } from './index.ts'
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useSupabaseClient } from "./useSupabaseClient.ts"
+import { Sale } from "./index.ts"
 
 export function useSaleUpsertMutation({
     onSuccess,
@@ -11,12 +11,12 @@ export function useSaleUpsertMutation({
     const supabase = useSupabaseClient()
 
     return useMutation({
-        mutationFn: async (data: Omit<Sale, 'id'> & { id?: string }) => {
-            const { error } = await supabase.from('sales').upsert(data)
+        mutationFn: async (data: Omit<Sale, "id"> & { id?: string }) => {
+            const { error } = await supabase.from("sales").upsert(data)
             if (error) throw error
         },
         onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ['sales'] })
+            await queryClient.invalidateQueries({ queryKey: ["sales"] })
             onSuccess()
         },
     })

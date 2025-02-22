@@ -1,5 +1,4 @@
-import { SaleForm } from './SaleForm.tsx'
-
+import { SaleForm } from "./SaleForm.tsx"
 
 export const SaleCreateForm = () => (
     <SaleForm
