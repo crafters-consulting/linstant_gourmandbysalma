@@ -9,7 +9,7 @@ import {
     usePurchaseInsertMutation,
 } from '../../hooks'
 
-export function PurchaseCreate() {
+export function PurchaseCreateForm() {
     const navigate = useNavigate()
     const { register, handleSubmit } = useForm<
         Purchase & { affectedSales: string[] }

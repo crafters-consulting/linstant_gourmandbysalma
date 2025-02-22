@@ -1,42 +1,13 @@
 import React, { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate } from 'react-router'
 import { Save } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { HeaderBar } from '../../components'
-import { Sale } from '../../hooks'
-import { useSaleByIdQuery, useSaleUpsertMutation } from '../../hooks'
+import { type Sale, useSaleUpsertMutation } from '../../hooks'
 
-export function SaleForm() {
-    const { id } = useParams()
-    return id ? <SaleEditForm id={id} /> : <SaleCreateForm />
-}
 
-const SaleEditForm: React.FC<{ id: string }> = ({ id }) => {
-    const { data, isLoading } = useSaleByIdQuery(id)
-
-    return isLoading || !data ? (
-        'Chargement...'
-    ) : (
-        <SaleFormWithDefaultValues
-            title='Modification de Vente'
-            data={data}
-            backUrl={`/sales/${data.id}`}
-        />
-    )
-}
-
-const SaleCreateForm: React.FC = () => {
-    return (
-        <SaleFormWithDefaultValues
-            title='Nouvelle Vente'
-            data={{} as Sale}
-            backUrl='/sales'
-        />
-    )
-}
-
-const SaleFormWithDefaultValues: React.FC<{
-    data: Sale
+export const SaleForm: React.FC<{
+    data: Partial<Sale>
     title: string
     backUrl: string
 }> = ({ title, data, backUrl }) => {
@@ -64,83 +35,83 @@ const SaleFormWithDefaultValues: React.FC<{
                 backUrl={backUrl}
             />
 
-            <main className='grid gap-4'>
-                <div className='card mb-6'>
-                    <div className='mb-6'>
-                        <label className='mb-2'>Date de Livraison</label>
+            <main className="grid gap-4">
+                <div className="card mb-6">
+                    <div className="mb-6">
+                        <label className="mb-2">Date de Livraison</label>
                         <input
-                            type='datetime-local'
+                            type="datetime-local"
                             {...register('deliveryDateTime')}
                         />
                     </div>
 
-                    <div className='mb-6'>
-                        <label className='mb-2'>Client</label>
+                    <div className="mb-6">
+                        <label className="mb-2">Client</label>
                         <input {...register('clientName')} />
                     </div>
 
-                    <div className='mb-6'>
-                        <label className='mb-2'>Adresse de Livraison</label>
+                    <div className="mb-6">
+                        <label className="mb-2">Adresse de Livraison</label>
                         <textarea
                             {...register('deliveryAddress')}
                             rows={2}
                         />
                     </div>
 
-                    <div className='mb-6'>
-                        <label className='mb-2'>Commentaire</label>
+                    <div className="mb-6">
+                        <label className="mb-2">Commentaire</label>
                         <textarea
                             {...register('description')}
                             rows={3}
                         />
                     </div>
 
-                    <div className='mb-6'>
-                        <label className='mb-2'>Montant</label>
+                    <div className="mb-6">
+                        <label className="mb-2">Montant</label>
                         <input
                             {...register('amount')}
-                            type='number'
-                            step='0.01'
+                            type="number"
+                            step="0.01"
                         />
                     </div>
 
-                    <div className='mb-6'>
-                        <label className='mb-2'>Acompte</label>
-                        <div className='flex gap-4'>
+                    <div className="mb-6">
+                        <label className="mb-2">Acompte</label>
+                        <div className="flex gap-4">
                             <input
                                 {...register('deposit')}
-                                type='number'
-                                step='0.01'
+                                type="number"
+                                step="0.01"
                             />
                             <select {...register('depositPaymentMethod')}>
-                                <option value='Revolut'>Revolut</option>
-                                <option value='PayPal'>PayPal</option>
-                                <option value='Cash'>Espèces</option>
+                                <option value="Revolut">Revolut</option>
+                                <option value="PayPal">PayPal</option>
+                                <option value="Cash">Espèces</option>
                             </select>
                         </div>
                     </div>
 
-                    <div className='mb-6'>
-                        <label className='block font-medium mb-2'>
+                    <div className="mb-6">
+                        <label className="block font-medium mb-2">
                             Reste à Payer
                         </label>
-                        <div className='flex gap-4'>
+                        <div className="flex gap-4">
                             <input
                                 {...register('remaining')}
-                                type='number'
-                                step='0.01'
+                                type="number"
+                                step="0.01"
                             />
                             <select {...register('remainingPaymentMethod')}>
-                                <option value='Cash'>Espèces</option>
-                                <option value='Revolut'>Revolut</option>
-                                <option value='PayPal'>PayPal</option>
+                                <option value="Cash">Espèces</option>
+                                <option value="Revolut">Revolut</option>
+                                <option value="PayPal">PayPal</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <button
-                    type='submit'
-                    className='primary'
+                    type="submit"
+                    className="primary"
                     disabled={isPending}
                 >
                     <Save size={20} /> Enregistrer

@@ -5,7 +5,7 @@ import { fr } from 'date-fns/locale'
 import { usePurchaseListQuery } from './usePurchaseListQuery.ts'
 import { Purchase, Sale } from './index.ts'
 
-type DashboardData = {
+export type DashboardData = {
     date: string
     saleAmount: number
     deposit: number
@@ -30,7 +30,7 @@ const purchaseToDashboardData = (it: Purchase) =>
 
 function joinSalesAndPurchase(
     saleData: Sale[] | null | undefined,
-    purchaseData: Purchase[] | null | undefined
+    purchaseData: Purchase[] | null | undefined,
 ) {
     return [
         ...(saleData || []).map(saleToDashboardData),
@@ -49,7 +49,7 @@ export function useDashboardDataQuery() {
                 .sort((a, b) =>
                     a.date
                         .substring(0, 10)
-                        .localeCompare(b.date.substring(0, 10))
+                        .localeCompare(b.date.substring(0, 10)),
                 )
                 .map((it) => ({
                     ...it,
@@ -74,29 +74,15 @@ export function useDashboardDataQuery() {
                                     : 0) + it.purchase,
                         },
                     }),
-                    {} as Record<string, DashboardData>
-                )
+                    {} as Record<string, DashboardData>,
+                ),
         )
 
+        const currentMonth = format(new Date(), 'MMMM yyyy', { locale: fr })
+
         return {
-            labels: results.map((it) => it.date),
-            datasets: [
-                {
-                    label: 'Ventes',
-                    data: results.map((it) => it.saleAmount),
-                    borderColor: 'rgb(255, 99, 132)',
-                },
-                {
-                    label: 'Acompte',
-                    data: results.map((it) => it.deposit),
-                    borderColor: 'rgb(53, 162, 235)',
-                },
-                {
-                    label: 'Dépenses',
-                    data: results.map((it) => it.purchase),
-                    borderColor: 'rgb(53, 235, 162)',
-                },
-            ],
+            currentMonth: results.find(it => it.date === currentMonth),
+            lastMonths: results
         }
     }, [saleData, purchaseData])
 

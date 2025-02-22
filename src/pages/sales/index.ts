@@ -1,3 +1,4 @@
 export { SaleList } from './SaleList'
 export { SaleView } from './SaleView'
-export { SaleForm } from './SaleForm'
+export { SaleCreateForm } from './SaleCreateForm'
+export { SaleEditForm } from './SaleEditForm'

@@ -6,8 +6,8 @@ import { HashRouter, Route, Routes } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Authenticated, NavBar } from './components'
 import { Dashboard } from './pages/dashboard'
-import { SaleForm, SaleList, SaleView } from './pages/sales'
-import { PurchaseCreate, PurchaseList, PurchaseView } from './pages/purchases'
+import { SaleCreateForm, SaleEditForm, SaleList, SaleView } from './pages/sales'
+import { PurchaseCreateForm, PurchaseList, PurchaseView } from './pages/purchases'
 import { ReportTaxes } from './pages/taxes'
 
 const queryClient = new QueryClient({
@@ -38,7 +38,7 @@ createRoot(document.getElementById('root')!).render(
                                     />
                                     <Route
                                         path='new'
-                                        element={<SaleForm />}
+                                        element={<SaleCreateForm />}
                                     />
                                     <Route
                                         path=':id'
@@ -46,7 +46,7 @@ createRoot(document.getElementById('root')!).render(
                                     />
                                     <Route
                                         path=':id/edit'
-                                        element={<SaleForm />}
+                                        element={<SaleEditForm />}
                                     />
                                 </Route>
                                 <Route path='purchases'>
@@ -56,7 +56,7 @@ createRoot(document.getElementById('root')!).render(
                                     />
                                     <Route
                                         path='new'
-                                        element={<PurchaseCreate />}
+                                        element={<PurchaseCreateForm />}
                                     />
                                     <Route
                                         path=':id'

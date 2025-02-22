@@ -1,44 +1,30 @@
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js'
-import { Line } from 'react-chartjs-2'
 import { HeaderBar } from '../../components'
 import { useDashboardDataQuery } from '../../hooks'
+import { SalesVsPurchasesCurrentMonth } from './SalesVsPurchasesCurrentMonth.tsx'
+import { SalesVsPurchasesLastMonths } from './SalesVsPurchasesLastMonths.tsx'
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-)
 
 export const Dashboard = () => {
     const { data, isLoading } = useDashboardDataQuery()
 
     return (
         <>
-            <HeaderBar title='Tableau de Board' />
-            <main>
-                {isLoading || !data ? (
-                    'Chargement...'
-                ) : (
-                    <div className='card mb-8'>
-                        <h2 className='mb-4'>Ventes / Achats par mois</h2>
+            <HeaderBar title="Tableau de Board" />
 
-                        <Line data={data} />
+            {isLoading || !data ? (
+                'Chargement...'
+            ) : (<main className="grid gap-4">
+                    <div className="card">
+                        <h2 className="mb-4">Ventes / Achats mois courant</h2>
+                        <SalesVsPurchasesCurrentMonth data={data.currentMonth} />
                     </div>
-                )}
-            </main>
+
+                    <div className="card">
+                        <h2 className="mb-4">Ventes / Achats par mois</h2>
+                        <SalesVsPurchasesLastMonths data={data.lastMonths} />
+                    </div>
+                </main>
+            )}
         </>
     )
 }
