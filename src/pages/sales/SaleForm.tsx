@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import { useNavigate } from "react-router"
 import { Save } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useDebounce } from 'use-debounce';
 import { HeaderBar } from "../../components"
 import { type Sale, useSaleUpsertMutation } from "../../hooks"
 
@@ -11,21 +12,37 @@ export const SaleForm: React.FC<{
     backUrl: string
 }> = ({ title, data, backUrl }) => {
     const navigate = useNavigate()
-    const { register, watch, setValue, handleSubmit } = useForm<Sale>({
+    const { register, watch, setValue, getValues, handleSubmit } = useForm<Sale>({
         defaultValues: data,
     })
-    const amount = watch("amount")
+    const [amount, deposit, remaining] = watch(["amount", "deposit", "remaining"])
+    const [debouncedAmount] = useDebounce(amount, 500)
+    const [debouncedDeposit] = useDebounce(deposit, 500)
+    const [debouncedRemaining] = useDebounce(remaining, 500)
     const { mutate, isPending } = useSaleUpsertMutation({
         onSuccess: () => navigate("/sales"),
     })
 
     useEffect(() => {
-        if (amount !== undefined) {
-            const deposit = Math.ceil(Math.ceil(amount * 0.3))
-            setValue("deposit", deposit)
-            setValue("remaining", amount - deposit)
+        if (debouncedAmount !== undefined) {
+            const remaining = Math.round((debouncedAmount * 0.7) / 10) * 10
+            setValue("deposit", debouncedAmount - remaining)
         }
-    }, [amount, setValue])
+    }, [debouncedAmount, setValue])
+
+    useEffect(() => {
+        const amount = getValues("amount")
+        if (amount !== undefined && debouncedDeposit !== undefined) {
+            setValue("remaining", amount - debouncedDeposit)
+        }
+    }, [debouncedDeposit, setValue, getValues])
+
+    useEffect(() => {
+        const amount = getValues("amount")
+        if (amount !== undefined && debouncedRemaining !== undefined) {
+            setValue("deposit", amount - debouncedRemaining)
+        }
+    }, [debouncedRemaining, setValue, getValues])
 
     return (
         <form onSubmit={handleSubmit((it) => mutate(it))}>
