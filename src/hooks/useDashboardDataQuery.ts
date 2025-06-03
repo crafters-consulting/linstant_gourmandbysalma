@@ -1,6 +1,6 @@
 import { useSaleListQuery } from "./useSaleListQuery.ts"
 import { useMemo } from "react"
-import { format } from "date-fns"
+import { format, isAfter, subMonths, startOfMonth } from "date-fns"
 import { fr } from "date-fns/locale"
 import { usePurchaseListQuery } from "./usePurchaseListQuery.ts"
 import { Purchase, Sale } from "./index.ts"
@@ -40,12 +40,13 @@ function joinSalesAndPurchase(
 
 export function useDashboardDataQuery() {
     const { data: saleData, isLoading: isLoadingSales } = useSaleListQuery()
-    const { data: purchaseData, isLoading: isLoadingPurchase } =
-        usePurchaseListQuery()
+    const { data: purchaseData, isLoading: isLoadingPurchase } = usePurchaseListQuery()
+    const chartStart = startOfMonth(subMonths(new Date(), 3))
 
     const data = useMemo(() => {
         const results = Object.values(
             joinSalesAndPurchase(saleData, purchaseData)
+                .filter(({date}) => isAfter(date, chartStart))
                 .sort((a, b) =>
                     a.date
                         .substring(0, 10)
@@ -53,7 +54,7 @@ export function useDashboardDataQuery() {
                 )
                 .map((it) => ({
                     ...it,
-                    date: format(it.date, "MMMM yyyy", { locale: fr }),
+                    date: format(it.date, "MMM", { locale: fr }),
                 }))
                 .reduce<Record<string, DashboardData>>(
                     (acc, it) => ({
@@ -78,13 +79,13 @@ export function useDashboardDataQuery() {
                 )
         )
 
-        const currentMonth = format(new Date(), "MMMM yyyy", { locale: fr })
+        const currentMonth = format(new Date(), "MMM", { locale: fr })
 
         return {
-            currentMonth: results.find((it) => it.date === currentMonth)!,
+            currentMonth: results.find((it) => it.date === currentMonth) || {},
             lastMonths: results,
         }
-    }, [saleData, purchaseData])
+    }, [saleData, purchaseData, chartStart])
 
     return {
         isLoading: isLoadingSales && isLoadingPurchase,

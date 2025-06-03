@@ -6,6 +6,10 @@ import { useDebounce } from 'use-debounce';
 import { HeaderBar } from "../../components"
 import { type Sale, useSaleUpsertMutation } from "../../hooks"
 
+const isValidAmount = (amount: string | number) => {
+  return amount !== '' && !isNaN(parseFloat(amount as string)) && isFinite(amount as number);
+};
+
 export const SaleForm: React.FC<{
     data: Partial<Sale>
     title: string
@@ -15,34 +19,27 @@ export const SaleForm: React.FC<{
     const { register, watch, setValue, getValues, handleSubmit } = useForm<Sale>({
         defaultValues: data,
     })
-    const [amount, deposit, remaining] = watch(["amount", "deposit", "remaining"])
+    const [amount, deposit] = watch(["amount", "deposit"])
     const [debouncedAmount] = useDebounce(amount, 500)
     const [debouncedDeposit] = useDebounce(deposit, 500)
-    const [debouncedRemaining] = useDebounce(remaining, 500)
     const { mutate, isPending } = useSaleUpsertMutation({
         onSuccess: () => navigate("/sales"),
     })
 
     useEffect(() => {
-        if (debouncedAmount !== undefined) {
-            const remaining = Math.round((debouncedAmount * 0.7) / 10) * 10
+        if (isValidAmount(debouncedAmount)) {
+            const remaining  = Math.ceil((debouncedAmount * 0.7) / 10) * 10
             setValue("deposit", debouncedAmount - remaining)
+            setValue("remaining", remaining)
         }
     }, [debouncedAmount, setValue])
 
     useEffect(() => {
         const amount = getValues("amount")
-        if (amount !== undefined && debouncedDeposit !== undefined) {
+        if (isValidAmount(amount) && isValidAmount(debouncedDeposit)) {
             setValue("remaining", amount - debouncedDeposit)
         }
     }, [debouncedDeposit, setValue, getValues])
-
-    useEffect(() => {
-        const amount = getValues("amount")
-        if (amount !== undefined && debouncedRemaining !== undefined) {
-            setValue("deposit", amount - debouncedRemaining)
-        }
-    }, [debouncedRemaining, setValue, getValues])
 
     return (
         <form onSubmit={handleSubmit((it) => mutate(it))}>
@@ -115,7 +112,7 @@ export const SaleForm: React.FC<{
                             <input
                                 {...register("remaining")}
                                 type="number"
-                                step="0.01"
+                                readOnly
                             />
                             <select {...register("remainingPaymentMethod")}>
                                 <option value="Cash">Espèces</option>
