@@ -23,7 +23,7 @@ src/
 ├── components/          # Composants réutilisables
 │   ├── Auth/           # Authentification (SignIn, Authenticated)
 │   ├── HeaderBar/      # Barre de navigation supérieure
-│   └── NavBar/         # Menu de navigation principal
+│   └── NavBar/         # Menu de navigation bottom (Dock DaisyUI 5)
 ├── hooks/              # Custom hooks et logique business
 │   ├── database.types.ts       # Types générés depuis Supabase
 │   ├── useSupabaseClient.ts    # Client Supabase singleton
@@ -194,7 +194,7 @@ DaisyUI fournit un système de composants complet basé sur Tailwind CSS. Classe
 - `form-control` - Conteneur de formulaire
 - `input`, `textarea`, `select` - Champs de formulaire avec variantes (`input-bordered`, `textarea-bordered`, `select-bordered`)
 - `navbar` - Barre de navigation avec `navbar-start`, `navbar-center`, `navbar-end`
-- `btm-nav` - Navigation bottom (mobile)
+- `dock` - Navigation bottom moderne (DaisyUI 5) avec `dock-label`, `dock-active`, tailles: `dock-sm`, `dock-md`, `dock-lg`
 - `alert` - Alertes avec variantes (`alert-error`)
 - `loading` - Spinners de chargement (`loading-spinner`)
 - `badge` - Badges avec variantes (`badge-ghost`, `badge-outline`, `badge-primary`)
