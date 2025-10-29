@@ -12,7 +12,6 @@ Site d'administration des commandes / achats pour traiteur spécialisé en petit
 - **Formulaires**: React Hook Form
 - **Backend**: Supabase (BaaS)
 - **Icons**: Lucide React
-- **Charts**: Recharts
 - **Utils**: date-fns, use-debounce
 - **Linting & Formatting**: Biome.js
 
@@ -32,7 +31,11 @@ src/
 │   ├── usePurchase*.ts        # Hooks pour les achats
 │   └── useDashboard*.ts       # Hooks pour le dashboard
 └── pages/              # Pages de l'application
-    ├── dashboard/      # Tableau de bord et graphiques
+    ├── dashboard/      # Tableau de bord avec calendrier
+    │   ├── index.tsx              # Page principale Dashboard
+    │   ├── CalendarView.tsx       # Vue calendrier mensuelle
+    │   ├── CalendarDay.tsx        # Cellule de jour avec points
+    │   └── DaySalesDetails.tsx    # Modal détails commandes
     ├── sales/          # Gestion des ventes
     ├── purchases/      # Gestion des achats
     └── taxes/          # Rapport des taxes
@@ -89,6 +92,25 @@ export function useSaleListQuery() {
         .from('sales')
         .select('*')
         .order('deliveryDateTime', { ascending: false })
+
+      if (error) throw error
+      return data
+    }
+  })
+}
+
+// Exemple: hooks/useUpcomingSalesQuery.ts (commandes à venir)
+export function useUpcomingSalesQuery() {
+  const client = useSupabaseClient()
+  return useQuery({
+    queryKey: ['sales', 'upcoming'],
+    queryFn: async () => {
+      const today = startOfDay(new Date()).toISOString()
+      const { data, error } = await client
+        .from('sales')
+        .select('*')
+        .gte('deliveryDateTime', today)
+        .order('deliveryDateTime', { ascending: true })
 
       if (error) throw error
       return data
@@ -228,9 +250,15 @@ Ce script génère automatiquement `src/hooks/database.types.ts` depuis le sché
 ## Fonctionnalités Principales
 
 ### Dashboard
-- Vue d'ensemble ventes vs achats du mois courant
-- Graphiques historiques des ventes/achats par mois (Recharts)
-- Indicateurs de performance
+- **Calendrier des commandes à venir** - Vue mensuelle interactive
+- Navigation entre les mois (précédent/suivant)
+- Visualisation des commandes par jour avec points colorés
+- Code couleur selon le statut de paiement:
+  - Vert: Entièrement payé
+  - Orange: Partiellement payé (acompte versé)
+  - Rouge: Non payé
+- Détails complets en cliquant sur un jour (client, montant, heure, adresse, description)
+- Calendrier headless custom avec `date-fns` pour un contrôle total du design
 
 ### Gestion des Ventes
 - Liste des ventes avec tri par date de livraison

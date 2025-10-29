@@ -4,7 +4,6 @@ export type Purchase = Database["public"]["Tables"]["purchases"]["Row"]
 export type Sale = Database["public"]["Tables"]["sales"]["Row"]
 
 // Dashboard
-export { useDashboardDataQuery } from "./useDashboardDataQuery"
 export { usePurchaseByIdQuery } from "./usePurchaseByIdQuery"
 export { usePurchaseInsertMutation } from "./usePurchaseInsertMutation"
 // Purchases
@@ -17,6 +16,7 @@ export { useSaleByIdQuery } from "./useSaleByIdQuery"
 export { useSaleListQuery } from "./useSaleListQuery"
 export { useSalePendingQuery } from "./useSalePendingQuery"
 export { useSaleUpsertMutation } from "./useSaleUpsertMutation"
+export { useUpcomingSalesQuery } from "./useUpcomingSalesQuery"
 export { useSignInMutation } from "./useSignInMutation"
 // Authentication
 export { useSupabaseSession } from "./useSupabaseSession"
