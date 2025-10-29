@@ -22,7 +22,7 @@ src/
 ├── components/          # Composants réutilisables
 │   ├── Auth/           # Authentification (SignIn, Authenticated)
 │   ├── HeaderBar/      # Barre de navigation supérieure
-│   └── NavBar/         # Menu de navigation bottom (Dock DaisyUI 5)
+│   ├── NavBar/         # Menu de navigation bottom (Dock DaisyUI 5)
 ├── hooks/              # Custom hooks et logique business
 │   ├── database.types.ts       # Types générés depuis Supabase
 │   ├── useSupabaseClient.ts    # Client Supabase singleton
@@ -65,6 +65,16 @@ src/
 - `description`: string? - Description de l'achat
 - `created_at`: timestamp
 
+#### `sale_items` - Lignes de produits des ventes
+- `id`: UUID (PK)
+- `sale_id`: UUID (FK → sales)
+- `description`: string - Description du produit (ex: "Plateau salé (33 pièces)")
+- `unit_price`: number - Prix unitaire
+- `quantity`: number - Quantité commandée
+- `total`: number - Total de la ligne (unit_price × quantity)
+- `position`: number - Ordre d'affichage
+- `created_at`: timestamp
+
 #### `sale_purchases` - Liaison Ventes/Achats
 - `id`: number (PK)
 - `sale_id`: UUID (FK → sales)
@@ -72,8 +82,9 @@ src/
 - `created_at`: timestamp
 
 ### Relations
+- Une vente peut avoir plusieurs items/produits (one-to-many via `sale_items`)
 - Une vente peut avoir plusieurs achats associés (many-to-many via `sale_purchases`)
-- Permet de tracker les coûts par vente
+- Permet de tracker les coûts et le détail des produits par vente
 
 ## Patterns de Développement
 
@@ -265,6 +276,7 @@ Ce script génère automatiquement `src/hooks/database.types.ts` depuis le sché
 - Création/édition avec calcul automatique de l'acompte (30%)
 - Arrondi intelligent du reste à payer (dizaine supérieure)
 - Modes de paiement: Revolut, PayPal, Espèces
+- **Gestion des articles de vente** - Ajout/modification/suppression des lignes de produits
 - Association des achats aux ventes
 
 ### Gestion des Achats
