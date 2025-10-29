@@ -1,14 +1,28 @@
 import type React from "react"
-import { type LinkProps, NavLink } from "react-router"
+import { useMatch, useNavigate } from "react-router"
 
-type MenuLinkProps = LinkProps & {
+type MenuLinkProps = {
+    to: string
     icon: React.ReactNode
     label?: string
 }
 
-export const MenuLink: React.FC<MenuLinkProps> = ({ icon, label, ...props }) => (
-    <NavLink {...props} className={({ isActive }) => isActive ? "dock-active" : ""}>
-        {icon}
-        {label && <span className="dock-label">{label}</span>}
-    </NavLink>
-)
+export const MenuLink: React.FC<MenuLinkProps> = ({ to, icon, label }) => {
+    const navigate = useNavigate()
+    const isActive = useMatch(to === "/" ? { path: to, end: true } : to)
+
+    const handleClick = () => {
+        navigate(to)
+    }
+
+    return (
+        <button
+            type="button"
+            onClick={handleClick}
+            className={isActive ? "dock-active" : ""}
+        >
+            {icon}
+            {label && <span className="dock-label">{label}</span>}
+        </button>
+    )
+}
