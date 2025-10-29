@@ -1,5 +1,5 @@
-import { Link } from "react-router"
 import { format, isPast } from "date-fns"
+import { Link } from "react-router"
 import { HeaderBar } from "../../components"
 import { useSaleListQuery } from "../../hooks"
 
@@ -8,10 +8,7 @@ export function SaleList() {
 
     return (
         <>
-            <HeaderBar
-                title="Ventes"
-                createUrl="/sales/new"
-            />
+            <HeaderBar title="Ventes" createUrl="/sales/new" />
 
             <main className="grid gap-4">
                 {isLoading || !data
@@ -20,37 +17,55 @@ export function SaleList() {
                           <Link
                               key={it.id}
                               to={`/sales/${it.id}`}
-                              className={`card ${isPast(it.deliveryDateTime) ? "!bg-gray-100" : ""}`}>
-                              <h2 className="text-lg font-medium">
-                                  {format(it.deliveryDateTime, "dd/MM/yyyy")}
-                              </h2>
-                              <p className="text-slate-600 font-bold">
-                                  {it.clientName}
-                              </p>
-                              <p className="text-slate-600">
-                                  {it.deliveryAddress}
-                              </p>
-                              <div className="flex justify-between gap-4 mt-4">
-                                  <p className="text-center font-bold text-green-500">
-                                      {it.deposit.toLocaleString("fr-FR", {
-                                          style: "currency",
-                                          currency: "EUR",
-                                      })}
-                                  </p>
-                                  <p className="text-center font-bold">+</p>
-                                  <p className="text-center font-bold text-red-500">
-                                      {it.remaining.toLocaleString("fr-FR", {
-                                          style: "currency",
-                                          currency: "EUR",
-                                      })}
-                                  </p>
-                                  <p className="text-center font-bold">=</p>
-                                  <p className="text-center font-bold">
-                                      {it.amount.toLocaleString("fr-FR", {
-                                          style: "currency",
-                                          currency: "EUR",
-                                      })}
-                                  </p>
+                              className={`card bg-base-100 shadow-lg hover:shadow-xl transition-shadow ${isPast(it.deliveryDateTime) ? "opacity-60" : ""}`}
+                          >
+                              <div className="card-body">
+                                  <div className="flex items-start justify-between">
+                                      <div className="flex-1">
+                                          <h2 className="card-title">
+                                              {format(
+                                                  it.deliveryDateTime,
+                                                  "dd/MM/yyyy"
+                                              )}
+                                          </h2>
+                                          <p className="text-base-content font-semibold">
+                                              {it.clientName}
+                                          </p>
+                                          <p className="text-base-content/70 text-sm">
+                                              {it.deliveryAddress}
+                                          </p>
+                                      </div>
+                                      {isPast(it.deliveryDateTime) && (
+                                          <div className="badge badge-ghost">
+                                              Passée
+                                          </div>
+                                      )}
+                                  </div>
+                                  <div className="flex items-center justify-between gap-2 mt-4 text-sm">
+                                      <div className="stat-value text-success text-base">
+                                          {it.deposit.toLocaleString("fr-FR", {
+                                              style: "currency",
+                                              currency: "EUR",
+                                          })}
+                                      </div>
+                                      <div className="font-bold">+</div>
+                                      <div className="stat-value text-error text-base">
+                                          {it.remaining.toLocaleString(
+                                              "fr-FR",
+                                              {
+                                                  style: "currency",
+                                                  currency: "EUR",
+                                              }
+                                          )}
+                                      </div>
+                                      <div className="font-bold">=</div>
+                                      <div className="stat-value text-base-content text-base">
+                                          {it.amount.toLocaleString("fr-FR", {
+                                              style: "currency",
+                                              currency: "EUR",
+                                          })}
+                                      </div>
+                                  </div>
                               </div>
                           </Link>
                       ))}

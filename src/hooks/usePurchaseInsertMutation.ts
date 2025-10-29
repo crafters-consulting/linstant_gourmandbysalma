@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import type { Purchase } from "./index.ts"
 import { useSupabaseClient } from "./useSupabaseClient.ts"
-import { Purchase } from "./index.ts"
 
 export const usePurchaseInsertMutation = ({
     onSuccess,

@@ -1,6 +1,6 @@
-import { useSupabaseClient } from "./useSupabaseClient.ts"
 import { useQuery } from "@tanstack/react-query"
-import { Purchase } from "./index.ts"
+import type { Purchase } from "./index.ts"
+import { useSupabaseClient } from "./useSupabaseClient.ts"
 
 export function usePurchaseByIdQuery(id: string) {
     const supabase = useSupabaseClient()

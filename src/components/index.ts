@@ -1,3 +1,3 @@
-export { NavBar } from "./NavBar"
-export { HeaderBar } from "./HeaderBar"
 export { Authenticated } from "./Auth"
+export { HeaderBar } from "./HeaderBar"
+export { NavBar } from "./NavBar"

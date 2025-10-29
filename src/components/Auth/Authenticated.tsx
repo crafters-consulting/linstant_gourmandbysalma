@@ -4,10 +4,5 @@ import { SignIn } from "./SignIn.tsx"
 
 export const Authenticated: FC<PropsWithChildren> = ({ children }) => {
     const { session, isLoading } = useSupabaseSession()
-    return isLoading
-        ? "Chargement..."
-        : (session
-                ? children
-                : <SignIn />
-        )
+    return isLoading ? "Chargement..." : session ? children : <SignIn />
 }

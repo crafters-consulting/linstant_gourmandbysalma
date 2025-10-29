@@ -1,9 +1,21 @@
-import React from "react"
-import { CartesianGrid, LabelProps, Legend, Line, LineChart, ResponsiveContainer, XAxis } from "recharts"
-import { DashboardData } from "../../hooks/useDashboardDataQuery.ts"
+import type React from "react"
+import {
+    CartesianGrid,
+    type LabelProps,
+    Legend,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    XAxis,
+} from "recharts"
+import type { DashboardData } from "../../hooks/useDashboardDataQuery.ts"
 
-
-export const CustomizedLabel: React.FC<LabelProps> = ({ x, y, stroke, value }) => (
+export const CustomizedLabel: React.FC<LabelProps> = ({
+    x,
+    y,
+    stroke,
+    value,
+}) => (
     <text x={x} y={y} dy={-5} fill={stroke} fontSize={8} textAnchor="middle">
         {(value as number).toFixed(2) + " €"}
     </text>
@@ -16,10 +28,7 @@ export const SalesVsPurchasesLastMonths: React.FC<{
         <ResponsiveContainer>
             <LineChart data={data}>
                 <XAxis dataKey="date" />
-                <Legend
-                    verticalAlign="top"
-                    height={36}
-                />
+                <Legend verticalAlign="top" height={36} />
                 <CartesianGrid strokeDasharray="3 3" />
                 <Line
                     name="Ventes"

@@ -1,6 +1,7 @@
-import React, { useMemo } from "react"
+import type React from "react"
+import { useMemo } from "react"
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts"
-import { DashboardData } from "../../hooks/useDashboardDataQuery.ts"
+import type { DashboardData } from "../../hooks/useDashboardDataQuery.ts"
 
 export const SalesVsPurchasesCurrentMonth: React.FC<{
     data: DashboardData
@@ -30,30 +31,20 @@ export const SalesVsPurchasesCurrentMonth: React.FC<{
                         data={data01}
                         dataKey="value"
                         outerRadius={90}
-                        fill="#8884d8">
-                        <Cell
-                            key={`cell-0`}
-                            fill="#35eba2"
-                        />
-                        <Cell
-                            key={`cell-1`}
-                            fill="#35a2eb"
-                        />
+                        fill="#8884d8"
+                    >
+                        <Cell key={`cell-0`} fill="#35eba2" />
+                        <Cell key={`cell-1`} fill="#35a2eb" />
                     </Pie>
                     <Pie
                         data={data02}
                         dataKey="value"
                         innerRadius={92}
                         outerRadius={100}
-                        fill="#82ca9d">
-                        <Cell
-                            key={`cell-0`}
-                            fill="#ff6385"
-                        />
-                        <Cell
-                            key={`cell-1`}
-                            fill="#ffffff"
-                        />
+                        fill="#82ca9d"
+                    >
+                        <Cell key={`cell-0`} fill="#ff6385" />
+                        <Cell key={`cell-1`} fill="#ffffff" />
                     </Pie>
                 </PieChart>
             </ResponsiveContainer>

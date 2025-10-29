@@ -1,6 +1,6 @@
-import { useSaleListQuery } from "./useSaleListQuery.ts"
 import { useMemo } from "react"
-import { Sale } from "./index.ts"
+import type { Sale } from "./index.ts"
+import { useSaleListQuery } from "./useSaleListQuery.ts"
 
 type ReportTaxe = {
     date: string

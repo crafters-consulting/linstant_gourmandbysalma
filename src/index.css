@@ -21,11 +21,6 @@ label {
     @apply block font-medium mb-2;
 }
 
-input,
-textarea {
-    @apply border border-gray-300 rounded-sm px-3 py-2 w-full text-base;
-}
-
 h1 {
     @apply text-2xl font-medium;
 }
@@ -34,32 +29,7 @@ h2 {
     @apply text-lg font-medium;
 }
 
-button,
-.button {
-    @apply flex items-center justify-center gap-2 rounded-sm px-4 py-2;
-}
-
-button.primary,
-.button.primary {
-    @apply bg-purple-800 text-white px-4 py-2;
-}
-
-button.danger,
-.button.danger {
-    @apply bg-red-600 text-white px-4 py-2;
-}
-
-.card {
-    @apply bg-white p-4 rounded-lg shadow-md;
-}
-
+/* Custom utility classes */
 .hstack {
     @apply flex items-center justify-between;
-}
-
-a.nav-link.active {
-    @apply text-purple-200;
-}
-
-a.nav-link.active svg {
 }

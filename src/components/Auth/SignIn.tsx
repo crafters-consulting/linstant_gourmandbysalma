@@ -9,35 +9,44 @@ export const SignIn = () => {
     const { mutate, isError, isPending } = useSignInMutation()
 
     return (
-        <div className="mx-auto text-center w-xs pt-20 pb-40">
-            <h1 className="mb-4">Bienvenue à nouveau</h1>
+        <div className="mx-auto text-center w-full max-w-md pt-20 pb-40 px-4">
+            <h1 className="mb-8">Bienvenue à nouveau</h1>
             <form
-                className="card"
-                onSubmit={handleSubmit((it) => mutate(it))}>
-                <input
-                    {...register("email")}
-                    type="email"
-                    placeholder="Adresse e-mail"
-                    className="mb-2 "
-                />
-                <input
-                    {...register("password")}
-                    type="password"
-                    placeholder="Mot de passe"
-                    className="mb-8"
-                />
+                className="card bg-base-100 shadow-xl"
+                onSubmit={handleSubmit((it) => mutate(it))}
+            >
+                <div className="card-body gap-4">
+                    <input
+                        {...register("email")}
+                        type="email"
+                        placeholder="Adresse e-mail"
+                        className="input input-bordered w-full"
+                    />
+                    <input
+                        {...register("password")}
+                        type="password"
+                        placeholder="Mot de passe"
+                        className="input input-bordered w-full"
+                    />
 
-                {isError && (
-                    <p className="text-red-500 mb-8">
-                        Adresse e-mail ou mot de passe incorrect
-                    </p>
-                )}
+                    {isError && (
+                        <div className="alert alert-error">
+                            <span>
+                                Adresse e-mail ou mot de passe incorrect
+                            </span>
+                        </div>
+                    )}
 
-                <button
-                    className="primary w-full"
-                    disabled={isPending}>
-                    Se connecter
-                </button>
+                    <button
+                        className="btn btn-primary w-full mt-4"
+                        disabled={isPending}
+                    >
+                        {isPending && (
+                            <span className="loading loading-spinner" />
+                        )}
+                        Se connecter
+                    </button>
+                </div>
             </form>
         </div>
     )
