@@ -12,12 +12,8 @@ export const usePurchaseInsertMutation = ({
 
     return useMutation({
         mutationFn: async ({
-            affectedSales,
             ...data
-        }: Omit<Purchase, "id"> & {
-            id?: string
-            affectedSales: string[]
-        }) => {
+        }: Omit<Purchase, "id"> & {id?: string}) => {
             const { data: inserted, error } = await supabase
                 .from("purchases")
                 .insert(data)
@@ -31,13 +27,6 @@ export const usePurchaseInsertMutation = ({
                 .delete()
                 .eq("sale_id", purchase_id)
             if (deleteError) throw deleteError
-
-            const { error: insertError } = await supabase
-                .from("sale_purchases")
-                .insert(
-                    affectedSales.map((sale_id) => ({ purchase_id, sale_id }))
-                )
-            if (insertError) throw insertError
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ["purchases"] })

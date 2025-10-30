@@ -3,16 +3,11 @@ import { fr } from "date-fns/locale"
 import { ArrowLeft, Trash } from "lucide-react"
 import { Link, useParams } from "react-router"
 import { HeaderBar, Loading } from "../../components"
-import {
-    usePurchaseByIdQuery,
-    usePurchaseSalesByPurchaseIdQuery,
-} from "../../hooks"
+import { usePurchaseByIdQuery } from "../../hooks"
 
 export function PurchaseView() {
     const { id } = useParams<{ id: string }>()
     const { data, isLoading } = usePurchaseByIdQuery(id!)
-    const { data: purchaseSales, isLoading: isLoadingPurchaseSales } =
-        usePurchaseSalesByPurchaseIdQuery(id!)
 
     return (
         <>
@@ -24,11 +19,9 @@ export function PurchaseView() {
                 <main>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Date
-                                </span>
-                            </label>
+                            <span className="label label-text font-medium">
+                                Date
+                            </span>
                             <p className="text-lg">
                                 {format(
                                     data.date,
@@ -42,11 +35,9 @@ export function PurchaseView() {
                     </div>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Montant
-                                </span>
-                            </label>
+                            <span className="label label-text font-medium">
+                                Montant
+                            </span>
                             <div className="stat-value text-primary text-2xl">
                                 {data.amount.toLocaleString("fr-FR", {
                                     style: "currency",
@@ -57,45 +48,10 @@ export function PurchaseView() {
                     </div>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Commentaire
-                                </span>
-                            </label>
+                            <span className="label label-text font-medium">
+                                Commentaire
+                            </span>
                             <p className="text-lg">{data.description}</p>
-                        </div>
-                    </div>
-                    <div className="card bg-base-100 shadow-xl">
-                        <div className="card-body">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Ventes Concernées
-                                </span>
-                            </label>
-                            {isLoadingPurchaseSales ? (
-                                <span className="loading loading-spinner" />
-                            ) : (
-                                <ul className="space-y-2">
-                                    {purchaseSales &&
-                                        purchaseSales.map((it) => (
-                                            <li
-                                                key={it.sale_id}
-                                                className="flex items-center gap-2"
-                                            >
-                                                <div className="badge badge-outline">
-                                                    {format(
-                                                        it.sales
-                                                            .deliveryDateTime,
-                                                        "dd/MM/yyyy HH:mm"
-                                                    )}
-                                                </div>
-                                                <span>
-                                                    {it.sales.clientName}
-                                                </span>
-                                            </li>
-                                        ))}
-                                </ul>
-                            )}
                         </div>
                     </div>
 
@@ -103,7 +59,7 @@ export function PurchaseView() {
                         <Link to={`/purchases`} className="btn py-10">
                             <ArrowLeft size={30} />
                         </Link>
-                        <button className="btn btn-error py-10">
+                        <button type="button" className="btn btn-error py-10">
                             <Trash size={30} />
                         </button>
                     </div>

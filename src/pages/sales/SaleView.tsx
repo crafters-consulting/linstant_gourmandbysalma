@@ -19,11 +19,9 @@ export function SaleView() {
                 <main>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Date de livraison
-                                </span>
-                            </label>
+                            <span className="label label-text font-medium">
+                                Date de livraison
+                            </span>
                             <p className="text-lg">
                                 {format(
                                     data.deliveryDateTime,
@@ -35,36 +33,30 @@ export function SaleView() {
                     </div>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Client
-                                </span>
-                            </label>
+                            <span className="label label-text font-medium">
+                                Client
+                            </span>
                             <p className="text-lg">{data.clientName}</p>
                         </div>
                     </div>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Adresse de livraison
-                                </span>
-                            </label>
+                            <span className="label label-text font-medium">
+                                Adresse de livraison
+                            </span>
                             <p className="text-lg">{data.deliveryAddress}</p>
                         </div>
                     </div>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Commentaire
-                                </span>
-                            </label>
+                            <span className="label label-text font-medium">
+                                Commentaire
+                            </span>
                             <p className="text-lg">{data.description}</p>
                         </div>
                     </div>
 
-                    <div className="stats stats-vertical lg:stats-horizontal shadow-xl">
+                    <div className="stats stats-vertical lg:stats-horizontal shadow-xl card bg-base-100 shadow-xl">
                         <div className="stat">
                             <div className="stat-title">Montant</div>
                             <div className="stat-value text-2xl">
@@ -93,22 +85,21 @@ export function SaleView() {
                             </div>
                         </div>
                     </div>
-                    {isFuture(data.deliveryDateTime) && (
-                        <div className="grid grid-cols-3 gap-4">
-                            <Link to={`/sales`} className="btn py-10">
-                                <ArrowLeft size={30} />
-                            </Link>
-                            <Link
-                                to={`/sales/${id}/edit`}
-                                className="btn btn-primary py-10"
-                            >
-                                <Edit size={30} />
-                            </Link>
-                            <button className="btn btn-error py-10">
-                                <Trash size={30} />
-                            </button>
-                        </div>
-                    )}
+                    <div className="grid grid-cols-3 gap-4">
+                        <Link to={`/sales`} className="btn py-10">
+                            <ArrowLeft size={30} />
+                        </Link>
+
+                        <Link
+                            to={`/sales/${id}/edit`}
+                            className="btn btn-primary py-10"
+                        >
+                            <Edit size={30} />
+                        </Link>
+                        <button type="button" className="btn btn-error py-10">
+                            <Trash size={30} />
+                        </button>
+                    </div>
                 </main>
             )}
         </>

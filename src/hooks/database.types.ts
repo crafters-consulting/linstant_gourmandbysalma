@@ -32,43 +32,7 @@ export type Database = {
                     id?: string
                 }
                 Relationships: []
-            }
-            sale_purchases: {
-                Row: {
-                    created_at: string
-                    id: number
-                    purchase_id: string
-                    sale_id: string
-                }
-                Insert: {
-                    created_at?: string
-                    id?: number
-                    purchase_id: string
-                    sale_id: string
-                }
-                Update: {
-                    created_at?: string
-                    id?: number
-                    purchase_id?: string
-                    sale_id?: string
-                }
-                Relationships: [
-                    {
-                        foreignKeyName: "sale_purchases_purchase_id_fkey"
-                        columns: ["purchase_id"]
-                        isOneToOne: false
-                        referencedRelation: "purchases"
-                        referencedColumns: ["id"]
-                    },
-                    {
-                        foreignKeyName: "sale_purchases_sale_id_fkey"
-                        columns: ["sale_id"]
-                        isOneToOne: false
-                        referencedRelation: "sales"
-                        referencedColumns: ["id"]
-                    },
-                ]
-            }
+            },
             sales: {
                 Row: {
                     amount: number

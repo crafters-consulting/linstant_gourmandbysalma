@@ -1,20 +1,12 @@
-import { format } from "date-fns"
 import { ArrowLeft, Save } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router"
 import { HeaderBar } from "../../components"
-import {
-    type Purchase,
-    usePurchaseInsertMutation,
-    useSalePendingQuery,
-} from "../../hooks"
+import { type Purchase, usePurchaseInsertMutation } from "../../hooks"
 
 export function PurchaseCreateForm() {
     const navigate = useNavigate()
-    const { register, handleSubmit } = useForm<
-        Purchase & { affectedSales: string[] }
-    >()
-    const { data, isLoading } = useSalePendingQuery()
+    const { register, handleSubmit } = useForm<Purchase>()
     const { mutate, isPending } = usePurchaseInsertMutation({
         onSuccess: () => navigate("/purchases"),
     })
@@ -62,38 +54,6 @@ export function PurchaseCreateForm() {
                                 rows={3}
                                 className="textarea w-full"
                             />
-                        </fieldset>
-                        <fieldset className="fieldset">
-                            <label
-                                className="fieldset-legend"
-                                htmlFor="affectedSales"
-                            >
-                                Ventes Concernées
-                            </label>
-                            <div className="border border-base-300 rounded-lg p-4 space-y-2">
-                                {isLoading || !data
-                                    ? "Chargement..."
-                                    : data.map((it) => (
-                                          <label
-                                              key={it.id}
-                                              className="flex items-center gap-3 cursor-pointer hover:bg-base-200 p-2 rounded"
-                                          >
-                                              <input
-                                                  type="checkbox"
-                                                  {...register("affectedSales")}
-                                                  value={it.id}
-                                                  className="checkbox"
-                                              />
-                                              <span className="flex-1">
-                                                  {format(
-                                                      it.deliveryDateTime,
-                                                      "dd/MM/yyyy"
-                                                  )}{" "}
-                                                  - {it.clientName}
-                                              </span>
-                                          </label>
-                                      ))}
-                            </div>
                         </fieldset>
                     </div>
                 </div>
