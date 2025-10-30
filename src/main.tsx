@@ -27,43 +27,38 @@ createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
             <HashRouter>
-                <div className="h-screen">
-                    <Authenticated>
-                        <div className="py-30">
-                            <Routes>
-                                <Route index element={<Dashboard />} />
-                                <Route path="sales">
-                                    <Route index element={<SaleList />} />
-                                    <Route
-                                        path="new"
-                                        element={<SaleCreateForm />}
-                                    />
-                                    <Route path=":id" element={<SaleView />} />
-                                    <Route
-                                        path=":id/edit"
-                                        element={<SaleEditForm />}
-                                    />
-                                </Route>
-                                <Route path="purchases">
-                                    <Route index element={<PurchaseList />} />
-                                    <Route
-                                        path="new"
-                                        element={<PurchaseCreateForm />}
-                                    />
-                                    <Route
-                                        path=":id"
-                                        element={<PurchaseView />}
-                                    />
-                                </Route>
+                <Authenticated>
+                    <div className="pb-38 pt-28">
+                        <Routes>
+                            <Route index element={<Dashboard />} />
+                            <Route path="sales">
+                                <Route index element={<SaleList />} />
                                 <Route
-                                    path="report-taxes"
-                                    element={<ReportTaxes />}
+                                    path="new"
+                                    element={<SaleCreateForm />}
                                 />
-                            </Routes>
-                        </div>
-                        <NavBar />
-                    </Authenticated>
-                </div>
+                                <Route path=":id" element={<SaleView />} />
+                                <Route
+                                    path=":id/edit"
+                                    element={<SaleEditForm />}
+                                />
+                            </Route>
+                            <Route path="purchases">
+                                <Route index element={<PurchaseList />} />
+                                <Route
+                                    path="new"
+                                    element={<PurchaseCreateForm />}
+                                />
+                                <Route path=":id" element={<PurchaseView />} />
+                            </Route>
+                            <Route
+                                path="report-taxes"
+                                element={<ReportTaxes />}
+                            />
+                        </Routes>
+                    </div>
+                    <NavBar />
+                </Authenticated>
             </HashRouter>
         </QueryClientProvider>
     </StrictMode>

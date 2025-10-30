@@ -1,7 +1,7 @@
 import { format } from "date-fns"
-import { Save } from "lucide-react"
+import { ArrowLeft, Save } from "lucide-react"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { HeaderBar } from "../../components"
 import {
     type Purchase,
@@ -21,53 +21,54 @@ export function PurchaseCreateForm() {
 
     return (
         <form onSubmit={handleSubmit((it) => mutate(it))}>
-            <HeaderBar title="Nouvel Achat" backUrl="/purchases" />
+            <HeaderBar title="Nouvel Achat" />
 
-            <main className="grid gap-10">
+            <main>
                 <div className="card bg-base-100 shadow-xl">
                     <div className="card-body gap-6">
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Date d'achat
-                                </span>
+                        <fieldset className="fieldset">
+                            <label
+                                className="fieldset-legend"
+                                htmlFor="supplierName"
+                            >
+                                Date d'achat
                             </label>
                             <input
                                 type="date"
                                 {...register("date")}
-                                className="input input-bordered"
+                                className="input w-full"
                             />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Montant
-                                </span>
+                        </fieldset>
+                        <fieldset className="fieldset">
+                            <label className="fieldset-legend" htmlFor="amount">
+                                Montant
                             </label>
                             <input
                                 type="number"
                                 step="0.01"
                                 {...register("amount")}
-                                className="input input-bordered"
+                                className="input w-full"
                             />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Commentaire
-                                </span>
+                        </fieldset>
+                        <fieldset className="fieldset">
+                            <label
+                                className="fieldset-legend"
+                                htmlFor="description"
+                            >
+                                Commentaire
                             </label>
                             <textarea
                                 {...register("description")}
                                 rows={3}
-                                className="textarea textarea-bordered"
+                                className="textarea w-full"
                             />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text font-medium">
-                                    Ventes Concernées
-                                </span>
+                        </fieldset>
+                        <fieldset className="fieldset">
+                            <label
+                                className="fieldset-legend"
+                                htmlFor="affectedSales"
+                            >
+                                Ventes Concernées
                             </label>
                             <div className="border border-base-300 rounded-lg p-4 space-y-2">
                                 {isLoading || !data
@@ -81,7 +82,7 @@ export function PurchaseCreateForm() {
                                                   type="checkbox"
                                                   {...register("affectedSales")}
                                                   value={it.id}
-                                                  className="checkbox checkbox-primary"
+                                                  className="checkbox"
                                               />
                                               <span className="flex-1">
                                                   {format(
@@ -93,17 +94,24 @@ export function PurchaseCreateForm() {
                                           </label>
                                       ))}
                             </div>
-                        </div>
+                        </fieldset>
                     </div>
                 </div>
-                <button
-                    type="submit"
-                    className="btn btn-primary btn-lg gap-2"
-                    disabled={isPending}
-                >
-                    {isPending && <span className="loading loading-spinner" />}
-                    <Save size={20} /> Enregistrer
-                </button>
+                <div className="grid grid-cols-2 gap-4">
+                    <Link to="/purchases" className="btn py-10">
+                        <ArrowLeft size={30} />
+                    </Link>
+                    <button
+                        type="submit"
+                        className="btn btn-primary gap-2 py-10"
+                        disabled={isPending}
+                    >
+                        {isPending && (
+                            <span className="loading loading-spinner" />
+                        )}
+                        <Save size={30} />
+                    </button>
+                </div>
             </main>
         </form>
     )

@@ -1,4 +1,4 @@
-import { HeaderBar } from "../../components"
+import { HeaderBar, Loading } from "../../components"
 import { useSaleListQuery } from "../../hooks"
 import { CalendarView } from "./CalendarView.tsx"
 
@@ -9,11 +9,9 @@ export const Dashboard = () => {
         <>
             <HeaderBar title="Calendrier des Commandes" />
             {isLoading ? (
-                <main className="flex justify-center items-center min-h-[50vh]">
-                    <span className="loading loading-spinner loading-lg" />
-                </main>
+                <Loading />
             ) : (
-                <main className="grid gap-4">
+                <main>
                     <CalendarView sales={sales} />
                 </main>
             )}

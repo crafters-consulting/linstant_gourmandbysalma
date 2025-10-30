@@ -9,7 +9,7 @@ type MenuLinkProps = {
 
 export const MenuLink: React.FC<MenuLinkProps> = ({ to, icon, label }) => {
     const navigate = useNavigate()
-    const isActive = useMatch(to === "/" ? { path: to, end: true } : to)
+    const isActive = useMatch({ path: to, end: to === "/" })
 
     const handleClick = () => {
         navigate(to)

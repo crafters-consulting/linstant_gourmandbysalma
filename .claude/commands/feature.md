@@ -110,8 +110,8 @@ export const PageName = () => {
   // 3. Render
   return (
     <>
-      <HeaderBar title="..." backUrl="..." />
-      <main className="grid gap-4">
+      <HeaderBar title="..." />
+      <main>
         {isLoading ? "Chargement..." : (
           {/* contenu */}
         )}

@@ -1,8 +1,8 @@
 import { format } from "date-fns"
 import { fr } from "date-fns/locale"
-import { Trash } from "lucide-react"
-import { useParams } from "react-router"
-import { HeaderBar } from "../../components"
+import { ArrowLeft, Trash } from "lucide-react"
+import { Link, useParams } from "react-router"
+import { HeaderBar, Loading } from "../../components"
 import {
     usePurchaseByIdQuery,
     usePurchaseSalesByPurchaseIdQuery,
@@ -16,14 +16,12 @@ export function PurchaseView() {
 
     return (
         <>
-            <HeaderBar title="Detail de l'Achat" backUrl="/purchases" />
+            <HeaderBar title="Detail de l'Achat" />
 
             {isLoading || !data ? (
-                <main className="flex justify-center items-center min-h-[50vh]">
-                    <span className="loading loading-spinner loading-lg" />
-                </main>
+                <Loading />
             ) : (
-                <main className="grid gap-4">
+                <main>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
                             <label className="label">
@@ -101,9 +99,14 @@ export function PurchaseView() {
                         </div>
                     </div>
 
-                    <button className="btn btn-error gap-2">
-                        <Trash size={20} /> Supprimer
-                    </button>
+                    <div className="grid grid-cols-2 gap-4">
+                        <Link to={`/purchases`} className="btn py-10">
+                            <ArrowLeft size={30} />
+                        </Link>
+                        <button className="btn btn-error py-10">
+                            <Trash size={30} />
+                        </button>
+                    </div>
                 </main>
             )}
         </>

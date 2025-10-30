@@ -1,8 +1,8 @@
 import { format, isFuture } from "date-fns"
 import { fr } from "date-fns/locale"
-import { Edit, Trash } from "lucide-react"
+import { ArrowLeft, Edit, Trash } from "lucide-react"
 import { Link, useParams } from "react-router"
-import { HeaderBar } from "../../components"
+import { HeaderBar, Loading } from "../../components"
 import { useSaleByIdQuery } from "../../hooks"
 
 export function SaleView() {
@@ -11,14 +11,12 @@ export function SaleView() {
 
     return (
         <>
-            <HeaderBar title="Detail de la Vente" backUrl="/sales" />
+            <HeaderBar title="Detail de la Vente" />
 
             {isLoading || !data ? (
-                <main className="flex justify-center items-center min-h-[50vh]">
-                    <span className="loading loading-spinner loading-lg" />
-                </main>
+                <Loading />
             ) : (
-                <main className="grid gap-4">
+                <main>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
                             <label className="label">
@@ -96,15 +94,18 @@ export function SaleView() {
                         </div>
                     </div>
                     {isFuture(data.deliveryDateTime) && (
-                        <div className="grid gap-4">
+                        <div className="grid grid-cols-3 gap-4">
+                            <Link to={`/sales`} className="btn py-10">
+                                <ArrowLeft size={30} />
+                            </Link>
                             <Link
                                 to={`/sales/${id}/edit`}
-                                className="btn btn-primary gap-2"
+                                className="btn btn-primary py-10"
                             >
-                                <Edit size={20} /> Modifier
+                                <Edit size={30} />
                             </Link>
-                            <button className="btn btn-error gap-2">
-                                <Trash size={20} /> Supprimer
+                            <button className="btn btn-error py-10">
+                                <Trash size={30} />
                             </button>
                         </div>
                     )}

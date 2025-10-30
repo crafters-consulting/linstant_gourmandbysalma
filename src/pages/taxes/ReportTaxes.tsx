@@ -9,7 +9,7 @@ export function ReportTaxes() {
         <>
             <HeaderBar title="Impôts" />
 
-            <main className="grid gap-4">
+            <main>
                 {isLoading || !data ? (
                     <div className="flex justify-center items-center min-h-[50vh]">
                         <span className="loading loading-spinner loading-lg" />

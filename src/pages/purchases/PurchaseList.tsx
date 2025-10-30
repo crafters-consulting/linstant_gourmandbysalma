@@ -1,19 +1,18 @@
 import { format } from "date-fns"
 import { Link } from "react-router"
-import { HeaderBar } from "../../components"
+import { HeaderBar, Loading } from "../../components"
 import { usePurchaseListQuery } from "../../hooks"
+import { Plus } from "lucide-react"
 
 export function PurchaseList() {
     const { data, isLoading } = usePurchaseListQuery()
 
     return (
         <>
-            <HeaderBar title="Achats" createUrl="/purchases/new" />
-            <main className="grid gap-4">
+            <HeaderBar title="Achats" />
+            <main>
                 {isLoading || !data ? (
-                    <div className="flex justify-center items-center min-h-[50vh]">
-                        <span className="loading loading-spinner loading-lg" />
-                    </div>
+                    <Loading />
                 ) : (
                     data.map((it) => (
                         <Link
@@ -40,6 +39,15 @@ export function PurchaseList() {
                         </Link>
                     ))
                 )}
+
+                <div className="fab bottom-22">
+                    <Link
+                        to="/purchases/new"
+                        className="btn btn-lg btn-circle btn-primary"
+                    >
+                        <Plus size={30} />
+                    </Link>
+                </div>
             </main>
         </>
     )
