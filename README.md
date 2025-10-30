@@ -228,6 +228,7 @@ DaisyUI fournit un système de composants complet basé sur Tailwind CSS. Classe
 - `input`, `textarea`, `select` - Champs de formulaire avec variantes (`input-bordered`, `textarea-bordered`, `select-bordered`)
 - `navbar` - Barre de navigation avec `navbar-start`, `navbar-center`, `navbar-end`
 - `dock` - Navigation bottom moderne (DaisyUI 5) avec `dock-label`, `dock-active`, tailles: `dock-sm`, `dock-md`, `dock-lg`
+- `modal` - Dialogs modaux avec `modal-box` et `modal-backdrop` (élément HTML `<dialog>` natif)
 - `alert` - Alertes avec variantes (`alert-error`)
 - `loading` - Spinners de chargement (`loading-spinner`)
 - `badge` - Badges avec variantes (`badge-ghost`, `badge-outline`, `badge-primary`)
@@ -268,7 +269,10 @@ Ce script génère automatiquement `src/hooks/database.types.ts` depuis le sché
   - Vert: Entièrement payé
   - Orange: Partiellement payé (acompte versé)
   - Rouge: Non payé
-- Détails complets en cliquant sur un jour (client, montant, heure, adresse, description)
+- **Dialog modal DaisyUI** - Détails complets des commandes du jour (client, montant, heure, adresse, description)
+  - Utilise l'élément HTML5 `<dialog>` natif avec les classes DaisyUI (`modal`, `modal-box`)
+  - Gestion automatique du focus et de l'accessibilité
+  - Fermeture via backdrop, bouton X ou touche Échap
 - Calendrier headless custom avec `date-fns` pour un contrôle total du design
 
 ### Gestion des Ventes
