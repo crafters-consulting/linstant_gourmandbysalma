@@ -32,7 +32,7 @@ export type Database = {
                     id?: string
                 }
                 Relationships: []
-            },
+            }
             sales: {
                 Row: {
                     amount: number

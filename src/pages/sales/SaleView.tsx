@@ -1,13 +1,30 @@
-import { format, isFuture } from "date-fns"
+import { format } from "date-fns"
 import { fr } from "date-fns/locale"
 import { ArrowLeft, Edit, Trash } from "lucide-react"
-import { Link, useParams } from "react-router"
+import { Link, useNavigate, useParams } from "react-router"
 import { HeaderBar, Loading } from "../../components"
-import { useSaleByIdQuery } from "../../hooks"
+import { useSaleByIdQuery, useSaleDeleteMutation } from "../../hooks"
 
 export function SaleView() {
     const { id } = useParams<{ id: string }>()
+    const navigate = useNavigate()
     const { data, isLoading } = useSaleByIdQuery(id!)
+    const { mutate: deleteSale, isPending: isDeleting } = useSaleDeleteMutation(
+        {
+            onSuccess: () => {
+                navigate("/sales")
+            },
+        }
+    )
+
+    const handleDeleteClick = () => {
+        const confirmed = window.confirm(
+            "Êtes-vous sûr de vouloir supprimer cette vente ? Cette action est irréversible."
+        )
+        if (confirmed && id) {
+            deleteSale(id)
+        }
+    }
 
     return (
         <>
@@ -96,8 +113,17 @@ export function SaleView() {
                         >
                             <Edit size={30} />
                         </Link>
-                        <button type="button" className="btn btn-error py-10">
-                            <Trash size={30} />
+                        <button
+                            type="button"
+                            className="btn btn-error py-10"
+                            onClick={handleDeleteClick}
+                            disabled={isDeleting}
+                        >
+                            {isDeleting ? (
+                                <span className="loading loading-spinner" />
+                            ) : (
+                                <Trash size={30} />
+                            )}
                         </button>
                     </div>
                 </main>

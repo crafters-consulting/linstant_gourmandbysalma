@@ -24,12 +24,12 @@ src/
 │   ├── HeaderBar/      # Barre de navigation supérieure
 │   ├── NavBar/         # Menu de navigation bottom (Dock DaisyUI 5)
 ├── hooks/              # Custom hooks et logique business
-│   ├── database.types.ts       # Types générés depuis Supabase
-│   ├── useSupabaseClient.ts    # Client Supabase singleton
-│   ├── useSupabaseSession.ts   # Gestion de la session
-│   ├── useSale*.ts            # Hooks pour les ventes
-│   ├── usePurchase*.ts        # Hooks pour les achats
-│   └── useDashboard*.ts       # Hooks pour le dashboard
+│   ├── database.types.ts           # Types générés depuis Supabase
+│   ├── useSupabaseClient.ts        # Client Supabase singleton
+│   ├── useSupabaseSession.ts       # Gestion de la session
+│   ├── useSale*.ts                 # Hooks pour les ventes (query, upsert, delete)
+│   ├── usePurchase*.ts             # Hooks pour les achats (query, insert, delete)
+│   └── useDashboard*.ts            # Hooks pour le dashboard
 └── pages/              # Pages de l'application
     ├── dashboard/      # Tableau de bord avec calendrier
     │   ├── index.tsx              # Page principale Dashboard
@@ -149,6 +149,41 @@ export function useSaleUpsertMutation(options?: { onSuccess?: () => void }) {
 
       if (error) throw error
       return data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['sales'] })
+      options?.onSuccess?.()
+    }
+  })
+}
+
+// Exemple: hooks/useSaleDeleteMutation.ts (suppression en cascade)
+export function useSaleDeleteMutation(options?: { onSuccess?: () => void }) {
+  const client = useSupabaseClient()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (saleId: string) => {
+      // 1. Supprimer les sale_items associés
+      const { error: itemsError } = await client
+        .from('sale_items')
+        .delete()
+        .eq('sale_id', saleId)
+      if (itemsError) throw itemsError
+
+      // 2. Supprimer les sale_purchases associés
+      const { error: purchasesError } = await client
+        .from('sale_purchases')
+        .delete()
+        .eq('sale_id', saleId)
+      if (purchasesError) throw purchasesError
+
+      // 3. Supprimer la vente
+      const { error: saleError } = await client
+        .from('sales')
+        .delete()
+        .eq('id', saleId)
+      if (saleError) throw saleError
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sales'] })
@@ -288,11 +323,13 @@ Ce script génère automatiquement `src/hooks/database.types.ts` depuis le sché
 - Modes de paiement: Revolut, PayPal, Espèces
 - **Gestion des articles de vente** - Ajout/modification/suppression des lignes de produits
 - Association des achats aux ventes
+- **Suppression de ventes** - Suppression en cascade (articles et liaisons) avec confirmation
 
 ### Gestion des Achats
 - Liste et création d'achats
 - Liaison aux ventes pour tracking des coûts
 - Vue détaillée par achat
+- **Suppression d'achats** - Suppression en cascade (liaisons) avec confirmation
 
 ### Rapport Taxes
 - Export et visualisation des données fiscales

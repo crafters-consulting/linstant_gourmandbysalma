@@ -1,8 +1,8 @@
 import { format } from "date-fns"
+import { Plus } from "lucide-react"
 import { Link } from "react-router"
 import { HeaderBar, Loading } from "../../components"
 import { usePurchaseListQuery } from "../../hooks"
-import { Plus } from "lucide-react"
 
 export function PurchaseList() {
     const { data, isLoading } = usePurchaseListQuery()

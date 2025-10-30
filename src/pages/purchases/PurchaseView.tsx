@@ -1,13 +1,29 @@
 import { format } from "date-fns"
 import { fr } from "date-fns/locale"
 import { ArrowLeft, Trash } from "lucide-react"
-import { Link, useParams } from "react-router"
+import { Link, useNavigate, useParams } from "react-router"
 import { HeaderBar, Loading } from "../../components"
-import { usePurchaseByIdQuery } from "../../hooks"
+import { usePurchaseByIdQuery, usePurchaseDeleteMutation } from "../../hooks"
 
 export function PurchaseView() {
     const { id } = useParams<{ id: string }>()
+    const navigate = useNavigate()
     const { data, isLoading } = usePurchaseByIdQuery(id!)
+    const { mutate: deletePurchase, isPending: isDeleting } =
+        usePurchaseDeleteMutation({
+            onSuccess: () => {
+                navigate("/purchases")
+            },
+        })
+
+    const handleDeleteClick = () => {
+        const confirmed = window.confirm(
+            "Êtes-vous sûr de vouloir supprimer cet achat ? Cette action est irréversible."
+        )
+        if (confirmed && id) {
+            deletePurchase(id)
+        }
+    }
 
     return (
         <>
@@ -59,8 +75,17 @@ export function PurchaseView() {
                         <Link to={`/purchases`} className="btn py-10">
                             <ArrowLeft size={30} />
                         </Link>
-                        <button type="button" className="btn btn-error py-10">
-                            <Trash size={30} />
+                        <button
+                            type="button"
+                            className="btn btn-error py-10"
+                            onClick={handleDeleteClick}
+                            disabled={isDeleting}
+                        >
+                            {isDeleting ? (
+                                <span className="loading loading-spinner" />
+                            ) : (
+                                <Trash size={30} />
+                            )}
                         </button>
                     </div>
                 </main>

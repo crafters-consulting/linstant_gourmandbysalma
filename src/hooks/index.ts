@@ -7,6 +7,7 @@ export type { TablesInsert }
 
 // Dashboard
 export { usePurchaseByIdQuery } from "./usePurchaseByIdQuery"
+export { usePurchaseDeleteMutation } from "./usePurchaseDeleteMutation"
 export { usePurchaseInsertMutation } from "./usePurchaseInsertMutation"
 // Purchases
 export { usePurchaseListQuery } from "./usePurchaseListQuery"
@@ -14,6 +15,7 @@ export { usePurchaseSalesByPurchaseIdQuery } from "./usePurchaseSalesByPurchaseI
 // Taxes
 export { useReportTaxesQuery } from "./useReportTaxesQuery"
 export { useSaleByIdQuery } from "./useSaleByIdQuery"
+export { useSaleDeleteMutation } from "./useSaleDeleteMutation"
 // Sales
 export { useSaleListQuery } from "./useSaleListQuery"
 export { useSalePendingQuery } from "./useSalePendingQuery"

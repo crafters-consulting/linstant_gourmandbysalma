@@ -5,4 +5,3 @@ export const Loading: React.FC = () => (
         <span className="loading loading-spinner loading-lg" />
     </main>
 )
-

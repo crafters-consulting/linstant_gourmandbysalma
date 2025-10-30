@@ -13,7 +13,7 @@ export const usePurchaseInsertMutation = ({
     return useMutation({
         mutationFn: async ({
             ...data
-        }: Omit<Purchase, "id"> & {id?: string}) => {
+        }: Omit<Purchase, "id"> & { id?: string }) => {
             const { data: inserted, error } = await supabase
                 .from("purchases")
                 .insert(data)

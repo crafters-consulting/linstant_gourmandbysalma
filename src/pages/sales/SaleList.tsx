@@ -1,8 +1,8 @@
 import { format, isPast } from "date-fns"
+import { Plus } from "lucide-react"
 import { Link } from "react-router"
 import { HeaderBar, Loading } from "../../components"
 import { useSaleListQuery } from "../../hooks"
-import { Plus } from "lucide-react"
 
 export function SaleList() {
     const { data, isLoading } = useSaleListQuery()
