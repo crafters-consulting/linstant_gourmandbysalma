@@ -35,7 +35,8 @@ src/
     │   ├── index.tsx              # Page principale Dashboard
     │   ├── CalendarView.tsx       # Vue calendrier mensuelle
     │   ├── CalendarDay.tsx        # Cellule de jour avec points
-    │   └── DaySalesDetails.tsx    # Modal détails commandes
+    │   ├── DaySalesDetails.tsx    # Modal détails commandes
+    │   └── RevenueStats.tsx       # Statistiques CA année/mois
     ├── sales/          # Gestion des ventes
     ├── purchases/      # Gestion des achats
     └── taxes/          # Rapport des taxes
@@ -269,6 +270,11 @@ Ce script génère automatiquement `src/hooks/database.types.ts` depuis le sché
   - Vert: Entièrement payé
   - Orange: Partiellement payé (acompte versé)
   - Rouge: Non payé
+- **Statistiques de chiffre d'affaires** - Affichage en temps réel
+  - CA de l'année avec sélecteur d'année (2024 à année courante + 1)
+  - CA du mois synchronisé avec le calendrier affiché
+  - Calculs côté client (pas de requêtes supplémentaires)
+  - Affichage avec composant `stats` de DaisyUI
 - **Dialog modal DaisyUI** - Détails complets des commandes du jour (client, montant, heure, adresse, description)
   - Utilise l'élément HTML5 `<dialog>` natif avec les classes DaisyUI (`modal`, `modal-box`)
   - Gestion automatique du focus et de l'accessibilité
