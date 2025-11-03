@@ -11,7 +11,7 @@ const isValidAmount = (amount: string | number) => {
     return (
         amount !== "" &&
         !Number.isNaN(parseFloat(amount as string)) &&
-        Number.isFinite(amount as number)
+        Number.isFinite(parseFloat(amount as string))
     )
 }
 
