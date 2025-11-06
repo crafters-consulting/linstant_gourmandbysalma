@@ -25,7 +25,7 @@ export const usePurchaseInsertMutation = ({
             const { error: deleteError } = await supabase
                 .from("sale_purchases")
                 .delete()
-                .eq("sale_id", purchase_id)
+                .eq("purchase_id", purchase_id)
             if (deleteError) throw deleteError
         },
         onSuccess: async () => {
